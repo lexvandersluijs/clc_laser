@@ -225,7 +225,28 @@ void TimelineShowElement::setup()
 	timeline.enableSnapToOtherKeyframes(false);
 	timeline.setLoopType(OF_LOOP_NORMAL);
 
+	// we don't want the timeline to start when it is not on the active showElement
+	// do we disable this here and explicity toggle this via the SpaceBarPressed() function
+	timeline.setSpacebarTogglePlay(false);
+
 	ofAddListener(timeline.events().bangFired, this, &TimelineShowElement::bangFired);
+}
+
+
+void TimelineShowElement::SpaceBarPressed()
+{
+	timeline.togglePlay();
+}
+
+void TimelineShowElement::setActive(bool a) 
+{
+	ShowElement::setActive(a);
+
+	if (a == false)
+	{
+		if (timeline.getIsPlaying())
+			timeline.stop();
+	}
 }
 
 void TimelineShowElement::update()
@@ -316,5 +337,144 @@ void RealtimeShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager, stri
 	laserManager.drawLaserGraphic(graphic, 1, renderProfileName);
 
 
+	laserManager.endDraw();
+}
+
+
+// --------------------------- RealtimeCirclesShowElement ------------------
+RealtimeCirclesShowElement::RealtimeCirclesShowElement(string name) : ShowElement(name)
+{
+
+}
+
+void RealtimeCirclesShowElement::setup()
+{
+	onsetD.setup(OFX_ODS_ODF_RCOMPLEX);
+	snd.loadSound("sound/NextStep_CLCEdit_Richard.mp3");
+	snd.setLoop(false);
+}
+
+void RealtimeCirclesShowElement::setActive(bool a)
+{
+	ShowElement::setActive(a);
+
+	if(a == false)
+		if (playing == true)
+		{
+			stop();
+		}
+}
+
+void RealtimeCirclesShowElement::SpaceBarPressed()
+{
+	if (playing == false)
+	{
+		start();
+	}
+	else
+	{
+		stop();
+	}
+}
+
+void RealtimeCirclesShowElement::start()
+{
+	snd.play();
+	playing = true;
+}
+
+void RealtimeCirclesShowElement::stop()
+{
+	snd.stop();
+	playing = false;
+}
+
+void RealtimeCirclesShowElement::update()
+{
+	// compute FFT
+	if (playing)
+	{
+		if (snd.getIsPlaying())
+		{
+			float* spectrum = ofSoundGetSpectrum(nBands);
+
+			if (onsetD.isOnsetting(spectrum))
+			{
+				//musicShader->pulse(0);
+				cout << "Onset detected" << endl;
+			}
+		}
+	}
+}
+
+void RealtimeCirclesShowElement::draw()
+{
+}
+
+void RealtimeCirclesShowElement::UpdateGraphic()
+{
+	ellipseGraphic.clear();
+
+	ofPolyline ellipse;
+	int NUM_STEPS = 100;
+	float a = 1;
+	float b = 1;
+	float n = 4;
+	float scale = 200;
+	//float offsetX = 200;
+	//float offsetY = 200;
+	for (int i = 0; i < NUM_STEPS; i++)
+	{
+		float t = i / (float)(NUM_STEPS - 1);
+		float tp = t * M_TWO_PI;
+		float cost = cos(tp);
+		float sint = sin(tp);
+		float x = scale * cost;
+		float y = scale * sint;
+
+		ellipse.addVertex(x, y, 0);
+	}
+	ellipse.close();
+	//graphic2.connectLineSegments();
+
+	ellipseGraphic.addPolyline(ellipse, ofColor(255.0f, 255.0f, 0.0f, 255.0f), false, true);
+}
+
+void RealtimeCirclesShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager, string renderProfileName)
+{
+	laserManager.beginDraw();
+
+	for (int i = 0; i < 3; i++)
+	{
+		ofPushMatrix();
+
+		float scale = 1;
+		switch (i)
+		{
+		case 0:
+			break;
+		case 1:
+			scale = 1.2f;
+			break;
+		case 2:
+			scale = 0.8f;
+			break;
+		}
+
+		// polylines get projected inside the drawLaserGraphic function, so we need a new set each time!
+		UpdateGraphic();
+
+		ofTranslate(400, 400);
+		ofScale(scale, scale);
+
+		float angle = fmod(ofGetElapsedTimef() * 30, 180) - 90;
+		ofRotateYDeg(angle);
+
+
+		laserManager.drawLaserGraphic(ellipseGraphic, 1, renderProfileName);
+
+		ofPopMatrix();
+
+	}
 	laserManager.endDraw();
 }

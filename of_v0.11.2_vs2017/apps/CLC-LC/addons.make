@@ -5,10 +5,11 @@ ofxNetwork
 ofxPoco
 ofxLaser
 ofxMSATimer
+ofxOnsetDetection
+ofxRange
 ofxTextInputField
+ofxTimecode
 ofxXmlSettings
 ofxTween
-ofxRange
-ofxTimecode
 ofxTimeline
 ofxVectorGraphics

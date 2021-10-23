@@ -4,6 +4,7 @@
 #include "ofxLaserManager.h"
 #include "SVGLoader.h"
 
+#include "ofxOnsetDetection.h"
 #include "ofxTimeline.h"
 #include "ofxTLAudioTrack.h"
 #include "ofxTLVideoTrack.h"
@@ -29,8 +30,10 @@ public:
 
 	bool selected = false;
 
-	void setActive(bool a) { active = a; }
+	virtual void setActive(bool a) { active = a; }
 	bool getActive() { return active; }
+
+	virtual void SpaceBarPressed() {}
 
 protected:
 	string name;
@@ -93,6 +96,39 @@ protected:
 	ofxLaser::Graphic graphic;
 };
 
+class RealtimeCirclesShowElement : public ShowElement
+{
+public:
+	RealtimeCirclesShowElement(string name);
+
+	virtual void setup();
+	virtual void update();
+	virtual void draw();
+	virtual void drawLaserGraphic(ofxLaser::Manager& laserManager, string renderProfileName);
+
+	virtual void SpaceBarPressed();
+
+	virtual void setActive(bool a);
+
+	void start();
+	void stop();
+
+protected:
+	void UpdateGraphic();
+
+	ofxLaser::Graphic ellipseGraphic;
+	//ofxLaser::Graphic circle2;
+	//ofxLaser::Graphic circle3;
+
+	// --- onset detection ---
+	bool playing = false;
+	int nBands = 1024;
+	ofSoundPlayer snd;
+	ofxOnsetDetection onsetD;
+
+
+};
+
 class TimelineShowElement : public ShowElement
 {
 public:
@@ -102,6 +138,10 @@ public:
 	virtual void update();
 	virtual void draw();
 	virtual void drawLaserGraphic(ofxLaser::Manager& laserManager, string renderProfileName);
+
+	virtual void SpaceBarPressed();
+
+	virtual void setActive(bool a);
 
 protected:
 	ofxTimeline timeline;

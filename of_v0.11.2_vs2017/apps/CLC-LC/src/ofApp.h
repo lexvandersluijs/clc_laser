@@ -1,5 +1,8 @@
 #pragma once
 
+const int OF_KEY_SPACE = 32;
+
+
 #include "ofMain.h"
 #include "ofxLaserManager.h"
 

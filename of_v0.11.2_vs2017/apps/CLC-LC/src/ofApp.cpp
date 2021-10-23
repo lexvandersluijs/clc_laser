@@ -20,6 +20,7 @@ void ofApp::setup(){
 	showElements.push_back(new TimelineShowElement("Song-1"));
 	showElements.push_back(new RealtimeShowElement("SuperEllipse-1"));
 	showElements.push_back(new SvgAnimationShowElement("SVG-Animation-Motorbikes"));
+	showElements.push_back(new RealtimeCirclesShowElement("RT-Circles"));
 
 	// initialize the selected state
 	selectedShowElementIndex = 0;
@@ -102,8 +103,9 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-//    if(key == OF_KEY_TAB) {
-//        laserManager.selectNextLaser();
-//    }
+    if(key == OF_KEY_SPACE) 
+	{
+		showElements[selectedShowElementIndex]->SpaceBarPressed();
+    }
 }
 
