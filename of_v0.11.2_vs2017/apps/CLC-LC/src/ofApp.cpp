@@ -46,7 +46,7 @@ void ofApp::setup(){
 
 void ofApp::selectedShowElementChanged(const void* sender, bool & newValue)
 {
-	cout << "ofApp::selectedShowElementChanged()";
+	cout << "ofApp::selectedShowElementChanged()" << endl;
 
 	if (newValue == false)
 		return;

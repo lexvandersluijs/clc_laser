@@ -24,7 +24,6 @@ public:
 
     void keyPressed(int key);
     
-    
 protected:
 	int selectedShowElementIndex = 0;
 

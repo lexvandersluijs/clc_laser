@@ -280,12 +280,105 @@ void TimelineShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager, stri
 // --------------------------- RealtimeShowElement ------------------
 RealtimeShowElement::RealtimeShowElement(string name) : ShowElement(name)
 {
-
 }
 
 void RealtimeShowElement::setup()
 {
 	// open audio input
+		// 0 output channels,
+	// 2 input channels
+	// 44100 samples per second
+	// 256 samples per buffer
+	// 4 num buffers (latency)
+	soundStream.printDeviceList();
+
+	int BUFFER_SIZE = 256;
+
+	//if you want to set a different device id
+	//soundStream.setDeviceID(4); //bear in mind the device id corresponds to all audio devices, including  input-only and output-only devices.
+	//bool result = soundStream.setup(app, 2, 1, 44100, BUFFER_SIZE, 4);
+
+	int bufferSize = 256;
+
+	left.assign(bufferSize, 0.0);
+	right.assign(bufferSize, 0.0);
+	volHistory.assign(400, 0.0);
+
+	bufferCounter = 0;
+	drawCounter = 0;
+	smoothedVol = 0.0;
+	scaledVol = 0.0;
+
+
+	ofSoundStreamSettings settings;
+
+	// if you want to set the device id to be different than the default
+	// auto devices = soundStream.getDeviceList();
+	// settings.device = devices[4];
+
+	// you can also get devices for an specific api
+	//auto devices = soundStream.getDeviceList(ofSoundDevice::Api::MS_ASIO);
+	//settings.setInDevice(devices[0]);
+
+	auto devices = soundStream.getDeviceList(ofSoundDevice::Api::MS_DS);
+	settings.setInDevice(devices[4]);
+
+	// or get the default device for an specific api:
+	// settings.api = ofSoundDevice::Api::PULSE;
+
+	// or by name
+	//auto devices = soundStream.getMatchingDevices("default");
+	//if (!devices.empty()) {
+	//	settings.setInDevice(devices[0]);
+	//}
+	settings.numBuffers = 1;
+	settings.setInListener(this);
+	settings.sampleRate = 44100;
+	settings.numOutputChannels = 0;
+	settings.numInputChannels = 2;
+	settings.bufferSize = bufferSize;
+	bool result = soundStream.setup(settings);
+
+	if (result)
+		cout << "soundStream.setup() successful" << endl;
+	else
+		cout << "soundStream.setup() error" << endl;
+}
+
+void RealtimeShowElement::audioIn(ofSoundBuffer & input)
+{
+	curVol = 0.0;
+
+	// samples are "interleaved"
+	int numCounted = 0;
+
+	//lets go through each sample and calculate the root mean square which is a rough way to calculate volume	
+	size_t maxSample = input.getNumFrames();
+	if (maxSample != left.size())
+	{
+		left.resize(maxSample);
+		right.resize(maxSample);
+	}
+
+	for (size_t i = 0; i < maxSample; i++) {
+		left[i] = input[i * 2] * 0.5;
+		right[i] = input[i * 2 + 1] * 0.5;
+
+		curVol += left[i] * left[i];
+		curVol += right[i] * right[i];
+		numCounted += 2;
+	}
+
+	//this is how we get the mean of rms :) 
+	curVol /= (float)numCounted;
+
+	// this is how we get the root of rms :) 
+	curVol = sqrt(curVol);
+
+	smoothedVol *= 0.93;
+	smoothedVol += 0.07 * curVol;
+
+	bufferCounter++;
 }
 
 void RealtimeShowElement::update()
@@ -318,9 +411,9 @@ void RealtimeShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager, stri
 	float a = 1;
 	float b = 1;
 	float n = 4;
-	float scale = 100;
-	float offsetX = 200;
-	float offsetY = 200;
+	float scale = 100 + 10000 * curVol;
+	float offsetX = 400;
+	float offsetY = 400;
 	for (int i = 0; i < NUM_STEPS; i++)
 	{
 		float t = i / (float)(NUM_STEPS - 1);

@@ -82,9 +82,10 @@ protected:
 };
 
 
-class RealtimeShowElement : public ShowElement
+class RealtimeShowElement : public ShowElement, ofBaseSoundInput
 {
 public:
+	//RealtimeShowElement(ofBaseApp* theApp, string name);
 	RealtimeShowElement(string name);
 
 	virtual void setup();
@@ -92,8 +93,23 @@ public:
 	virtual void draw();
 	virtual void drawLaserGraphic(ofxLaser::Manager& laserManager, string renderProfileName);
 
+	virtual void audioIn(ofSoundBuffer & input);
+
 protected:
+	//ofBaseApp* app;
 	ofxLaser::Graphic graphic;
+	ofSoundStream soundStream;
+
+	vector <float> left;
+	vector <float> right;
+	vector <float> volHistory;
+
+	int 	bufferCounter;
+	int 	drawCounter;
+
+	float curVol = 0.0;
+	float smoothedVol;
+	float scaledVol;
 };
 
 class RealtimeCirclesShowElement : public ShowElement

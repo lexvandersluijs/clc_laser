@@ -162,7 +162,14 @@ void ofApp::audioIn(ofSoundBuffer & input){
 	int numCounted = 0;	
 
 	//lets go through each sample and calculate the root mean square which is a rough way to calculate volume	
-	for (size_t i = 0; i < input.getNumFrames(); i++){
+	size_t maxSample = input.getNumFrames();
+	if (maxSample != left.size())
+	{
+		left.resize(maxSample);
+		right.resize(maxSample);
+	}
+
+	for (size_t i = 0; i < maxSample; i++){
 		left[i]		= input[i*2]*0.5;
 		right[i]	= input[i*2+1]*0.5;
 
