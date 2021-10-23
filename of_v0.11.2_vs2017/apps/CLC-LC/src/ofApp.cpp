@@ -10,6 +10,7 @@
 void ofApp::setup(){
 
 	svgShowElement.setup();
+	svgShowElement.setup2(laserManager);
 	timelineShowElement.setup();
 	realtimeShowElement.setup();
     
@@ -33,7 +34,8 @@ void ofApp::draw(){
     ofBackground(15,15,20);
 
 	// draw the selected show element to the laser (manager)
-	laserManager.drawLaserGraphic(svgShowElement.getLaserGraphic(), 1, OFXLASER_PROFILE_FAST);
+	// TODO: I think we want to set the render profile on a showElement-by-showElement basis
+	svgShowElement.drawLaserGraphic(laserManager, "DEFAULT");
 
 	// let the selected show element draw its UI to the screen
 	svgShowElement.draw();
