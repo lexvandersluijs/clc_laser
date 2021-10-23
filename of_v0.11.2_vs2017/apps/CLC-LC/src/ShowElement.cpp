@@ -220,6 +220,9 @@ void TimelineShowElement::setup()
 	timeline.setup();
 	timeline.setOffset(ofVec2f(0, ofGetWindowHeight() * 0.75f));
 
+	timeline.addAudioTrack("audio", "sound/4chan.wav");
+	timeline.setDurationInSeconds(timeline.getAudioTrack("audio")->getDuration());
+
 	timeline.addCurves("curves", ofRange(0, 255));
 	timeline.addBangs("bangs");
 	timeline.enableSnapToOtherKeyframes(false);
