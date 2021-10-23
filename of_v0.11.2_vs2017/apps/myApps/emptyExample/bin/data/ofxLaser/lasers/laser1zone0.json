@@ -1,0 +1,40 @@
+{
+    "params": {
+        "laserZone0": {
+            "1": {
+                "Bottom": "0",
+                "Left": "0",
+                "Right": "0",
+                "Top": "0"
+            },
+            "mute": "0",
+            "solo": "0"
+        }
+    },
+    "zonetransform": {
+        "ZoneTransformParams": {
+            "edit_subdivisions": "1",
+            "perspective": "1",
+            "x_divisions": "1",
+            "y_divisions": "1"
+        },
+        "handles": [
+            [
+                149.32614135742188,
+                208.62533569335938
+            ],
+            [
+                646.3612060546875,
+                198.9218292236328
+            ],
+            [
+                200.0,
+                600.0
+            ],
+            [
+                600.0,
+                600.0
+            ]
+        ]
+    }
+}

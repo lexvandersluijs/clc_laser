@@ -30,3 +30,15 @@
 *.exe
 *.out
 *.app
+
+# Visual Studio stuff
+*.pdb
+*.tlog
+*.lastbuildstate
+*.log
+*.user 
+*.VC.opendb
+.vs
+
+# ofxLaser
+*.ofxlg

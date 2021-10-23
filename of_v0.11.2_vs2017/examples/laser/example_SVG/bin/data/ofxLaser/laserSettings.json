@@ -1,0 +1,22 @@
+{
+    "Laser": {
+        "Custom": {
+            "Current_SVG": "3",
+            "Render_Profile": "0",
+            "Render_Profile_name": "Render Profile : OFXLASER_PROFILE_DEFAULT",
+            "Rotate_3D": "1",
+            "SVG_scale": "1.44",
+            "UnknownName": "4_liberation.svg",
+            "description": "INSTRUCTIONS : \nLeft and Right Arrows to change current SVG \nTAB to toggle output editor \nF to toggle full screen"
+        },
+        "Edit_laser": "1",
+        "Global_brightness": "0.2",
+        "Global_test_pattern": "0",
+        "Interface": {
+            "Lock_input_zones": "1",
+            "Show_path_previews": "1",
+            "Show_preview": "1"
+        },
+        "numLasers": "1"
+    }
+}

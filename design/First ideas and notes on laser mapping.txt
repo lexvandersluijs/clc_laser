@@ -1,0 +1,59 @@
+Laser mapping in CLC
+
+Requirements
+
+											OF / ofxLaser					TouchDesigner
+- show 3D spinning logo						?								? No optimization of drawing path?
+- show animated lightning flash 			Animated SVG					?
+- show mapping on building synced to music	Bangs on timeline tracks*					No timeline? Use multichannel click track?
+- show starfield							Own Particle system				Have particles show as lines, send to Laser node?
+- show rain falling over the stage**
+
+OF 3D spinning logo:
+- read 3D model file (e.g. 3DS - has edge visibility I think)
+- tesselate for painter's algo
+- draw filled tris and edges back to front
+- re-connect edges into polylines
+
+OR
+
+- use EBT visible edge determination code
+
+OR
+
+- render 3D model to texture, with special textures so that only the right edges will be found in the next step
+   * or, instead of using special texture with gradient, render the edges to a texture map (see Blender video on 'wear')
+     then render tihs object unlit, ( non-maximal suppression + erosion = stages of Canny ED.)
+- perform Canny edge detection
+
+
+
+
+Mapping:									Add drawing control
+												Create polylines per drawing
+												Ability to select point, move it w mouse, nudge w arrow keys
+											Save drawing element
+											Assign drawing + effect to 'bang'
+													Need to implement assignment function. 
+													Maybe simply show gallery of shapes with track, then effect selection for each 'bang'
+											
+											
+Effects:
+(1) take polyline from start to finish, then create a new one that is an animated segment of it
+(2) take polyline, replace with dots
+(3) take polyline, flash in and fade out
+
+** could be done with lines going straight down + effect (1)
+
+
+Special consideration: is it possible to manually trace the decor from where the projector is? Too far away..
+Ideas:
+  - use Remote desktop and 2nd laptop to go to stage, and do tracing there
+  - create 3D reconstruction of stage using photogrammetry, then create 3D polylines, project these to 2D using calibrated pose of projector
+     then do show the same way as if 2D elements were drawn directly
+	 
+  - create 3D models of individual decor pieces, put AR markers on them temporarily, get the exact pose of these using calibrated stereo pair
+    then project onto the pieces..
+	
+	
+	

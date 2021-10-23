@@ -1,0 +1,10 @@
+{
+	"advancedMode": false,
+	"defaultOfPath": "C:\\Projects\\mine\\of_v0.11.2_vs2017",
+	"defaultPlatform": "vs",
+	"defaultRelativeProjectPath": "apps/myApps",
+	"showConsole": false,
+	"showDeveloperTools": false,
+	"useDictionaryNameGenerator": true,
+	"verboseOutput": true
+}

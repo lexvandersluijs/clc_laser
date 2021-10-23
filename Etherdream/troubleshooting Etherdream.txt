@@ -1,0 +1,11 @@
+https://www.minitool.com/news/hardware-and-devices-troubleshooter-missing-fix.html
+
+msdt.exe -id DeviceDiagnostic
+
+setting to never install additional drivers changed, but no luck with EtherDream
+
+
+Disable 'fast startup' ??
+
+https://www.tenorshare.com/android/unknown-usb-device-set-address-failed.html
+
