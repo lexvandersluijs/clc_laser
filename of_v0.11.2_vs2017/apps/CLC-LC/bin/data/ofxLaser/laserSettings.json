@@ -1,13 +1,10 @@
 {
     "Laser": {
         "Custom": {
-            "Current_SVG": "8",
-            "Render_Profile": "1",
-            "Render_Profile_name": "Render Profile : OFXLASER_PROFILE_DETAIL",
-            "Rotate_3D": "1",
-            "SVG_scale": "1",
-            "UnknownName": "9_leaders_export.svg",
-            "description": "INSTRUCTIONS : \nLeft and Right Arrows to change current SVG \nTAB to toggle output editor \nF to toggle full screen"
+            "SVG-Animation-Motorbikes": "0",
+            "SVG-LEADERS": "1",
+            "Song-1": "0",
+            "SuperEllipse-1": "0"
         },
         "Edit_laser": "1",
         "Global_brightness": "0.2",

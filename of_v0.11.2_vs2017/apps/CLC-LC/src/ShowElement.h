@@ -13,17 +13,39 @@ using namespace ofxLaser;
 class ShowElement
 {
 public:
+	ShowElement(string n);
+	virtual ~ShowElement();
+
+	string getName() { return name; }
+
 	virtual void setup() = 0;
 	virtual void update() = 0;
 	virtual void draw() = 0;
 	virtual void drawLaserGraphic(ofxLaser::Manager& laserManager, string renderProfileName) = 0;
+
+	void loadParameterJson();
+	void addParameter(ofAbstractParameter& param);
+	void saveParameters();
+
+	bool selected = false;
+
+	void setActive(bool a) { active = a; }
+	bool getActive() { return active; }
+
+protected:
+	string name;
+	bool active = false;
+
+	ofJson parameterJson;
+	ofParameterGroup parameters;
 };
 
-class SvgShowElement
+class SvgShowElement : public ShowElement
 {
 public:
+	SvgShowElement(string name);
+
 	virtual void setup();
-	void setup2(ofxLaser::Manager& laserManager);
 	virtual void update();
 	virtual void draw();
 	virtual void drawLaserGraphic(ofxLaser::Manager& laserManager, string renderProfileName);
@@ -41,9 +63,11 @@ protected:
 	vector<string> fileNames;
 };
 
-class SvgAnimationShowElement
+class SvgAnimationShowElement : public ShowElement
 {
 public:
+	SvgAnimationShowElement(string name);
+
 	virtual void setup();
 	virtual void update();
 	virtual void draw();
@@ -55,9 +79,11 @@ protected:
 };
 
 
-class RealtimeShowElement
+class RealtimeShowElement : public ShowElement
 {
 public:
+	RealtimeShowElement(string name);
+
 	virtual void setup();
 	virtual void update();
 	virtual void draw();
@@ -67,9 +93,11 @@ protected:
 	ofxLaser::Graphic graphic;
 };
 
-class TimelineShowElement
+class TimelineShowElement : public ShowElement
 {
 public:
+	TimelineShowElement(string name);
+
 	virtual void setup();
 	virtual void update();
 	virtual void draw();

@@ -2,8 +2,62 @@
 
 #include "ofxLaserUI.h"
 
+ShowElement::ShowElement(string n) 
+{ 
+	name = n;
+
+	loadParameterJson();
+}
+
+ShowElement::~ShowElement()
+{
+	saveParameters();
+}
+
+void ShowElement::loadParameterJson()
+{
+	string filename = "showElements/" + name + ".json";
+	if (ofFile(filename).exists()) {
+		parameterJson = ofLoadJson(filename);
+	}
+	// if the json didn't load then this shouldn't do anything
+	ofDeserialize(parameterJson, parameters);
+
+}
+
+void ShowElement::addParameter(ofAbstractParameter& param)
+{
+	parameters.add(param);
+
+	if (!parameterJson.empty()) {
+		if (parameterJson.contains("Laser")) {
+			if (parameterJson["Laser"].contains("Custom")) {
+				//     auto value = loadJson["Laser"]["Custom"][param.getName()];
+				try {
+					ofDeserialize(parameterJson["Laser"]["Custom"], param);
+				}
+				catch (...) {
+
+				}
+			}
+		}
+	}
+}
+
+void ShowElement::saveParameters()
+{
+	ofJson json;
+	ofSerialize(json, parameters);
+
+	bool savesuccess = ofSavePrettyJson("showElements/" + name + ".json", json);
+}
 
 // -------------------------- SvgShowElement --------------------------
+SvgShowElement::SvgShowElement(string name) : ShowElement(name)
+{
+
+}
+
 void SvgShowElement::setup()
 {
 	// get the filenames of all the svgs in the data/svgs folder
@@ -37,23 +91,19 @@ void SvgShowElement::setup()
 
 	currentSVG = 0;
 
-}
 
-void SvgShowElement::setup2(ofxLaser::Manager& laserManager)
-{
-	//	TODO: we want to save these parameters in our own JSON, and present them in our own GUI
-
-	laserManager.addCustomParameter(currentSVG.set("Current SVG", 0, 0, laserGraphics.size() - 1));
-	laserManager.addCustomParameter(currentSVGFilename.set("Filename"));
-	laserManager.addCustomParameter(scale.set("SVG scale", 1.0, 0.1, 6));
-	laserManager.addCustomParameter(rotate3D.set("Rotate 3D", true));
-	laserManager.addCustomParameter(renderProfileLabel.set("Render Profile name", ""));
-	laserManager.addCustomParameter(renderProfileIndex.set("Render Profile", 1, 0, 2));
+	addParameter(currentSVG.set("Current SVG", 0, 0, laserGraphics.size() - 1));
+	addParameter(currentSVGFilename.set("Filename"));
+	addParameter(scale.set("SVG scale", 1.0, 0.1, 6));
+	addParameter(rotate3D.set("Rotate 3D", true));
+	addParameter(renderProfileLabel.set("Render Profile name", ""));
+	addParameter(renderProfileIndex.set("Render Profile", 1, 0, 2));
 
 	ofParameter<string> description;
 	description.set("description", "INSTRUCTIONS : \nLeft and Right Arrows to change current SVG \nTAB to toggle output editor \nF to toggle full screen");
-	laserManager.addCustomParameter(description);
+	addParameter(description);
 }
+
 
 void SvgShowElement::update()
 {
@@ -108,6 +158,11 @@ void SvgShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager, string re
 }
 
 // ----------------------- SvgAnimationShowElement -------------------------
+SvgAnimationShowElement::SvgAnimationShowElement(string name) : ShowElement(name)
+{
+
+}
+
 void SvgAnimationShowElement::setup()
 {
 	// the first time it runs, the SVGLoader will load the SVGs
@@ -132,9 +187,9 @@ void SvgAnimationShowElement::draw()
 
 	float x = 0;
 	float spacing = 8;
-	UI::startWindow("Settings", ImVec2(x, spacing), ImVec2(ofGetWindowWidth(), 0), ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize, true);
+	//UI::startWindow("Settings", ImVec2(x, spacing), ImVec2(ofGetWindowWidth(), 0), ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize, true);
 
-	UI::endWindow();
+	//UI::endWindow();
 
 }
 
@@ -153,6 +208,10 @@ void SvgAnimationShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager, 
 }
 
 // -------------------------- TimelineShowElement --------------------------
+TimelineShowElement::TimelineShowElement(string name) : ShowElement(name)
+{
+
+}
 
 void TimelineShowElement::setup()
 {
@@ -195,6 +254,11 @@ void TimelineShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager, stri
 }
 
 // --------------------------- RealtimeShowElement ------------------
+RealtimeShowElement::RealtimeShowElement(string name) : ShowElement(name)
+{
+
+}
+
 void RealtimeShowElement::setup()
 {
 	// open audio input

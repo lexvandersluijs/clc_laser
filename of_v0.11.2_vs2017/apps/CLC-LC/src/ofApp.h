@@ -5,10 +5,14 @@
 
 #include "ShowElement.h"
 
+#include <list>
+
 class ofApp : public ofBaseApp
 {
 
 public:
+	~ofApp();
+
     void setup();
     void update();
     void draw();
@@ -21,11 +25,10 @@ public:
 protected:
 	int selectedShowElementIndex = 0;
 
-	SvgShowElement svgShowElement;
-	TimelineShowElement timelineShowElement;
-	RealtimeShowElement realtimeShowElement;
+	std::vector<ShowElement*> showElements;
+	std::vector<ofParameter<bool>*> selectedElementBooleans;
 
     ofxLaser::Manager laserManager;
     
-
+	void selectedShowElementChanged(const void* sender, bool & newValue);
 };
