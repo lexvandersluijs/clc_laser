@@ -17,6 +17,7 @@ ofApp::~ofApp()
 void ofApp::setup(){
 
 	showElements.push_back(new SvgShowElement("SVG-LEADERS"));
+	showElements.push_back(new SvgShowElement("SVG-LOGO"));
 	showElements.push_back(new TimelineShowElement("Song-1"));
 	showElements.push_back(new RealtimeShowElement("SuperEllipse-1"));
 	showElements.push_back(new SvgAnimationShowElement("SVG-Animation-Motorbikes"));
@@ -88,17 +89,17 @@ void ofApp::draw(){
 	// draw the selected show element to the laser (manager)
 	// TODO: I think we want to set the render profile on a showElement-by-showElement basis
 	showElements[selectedShowElementIndex]->drawLaserGraphic(laserManager, "DEFAULT");
+	
+	// send the data to the laser - as little latency as possible
+	laserManager.send();
+
+	// draw the laser manager UI to the screen
+	laserManager.drawUI();
 
 	// let the selected show element draw its UI to the screen
 	showElements[selectedShowElementIndex]->draw();
 
-	// send the data to the laser
-    laserManager.send();
-
-	// draw the laser manager UI to the screen
-    laserManager.drawUI();
- 
-
+	ofxLaser::UI::render();
 }
 
 //--------------------------------------------------------------

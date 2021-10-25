@@ -9,7 +9,12 @@
 #include "ofxTLAudioTrack.h"
 #include "ofxTLVideoTrack.h"
 
+#include "ParticleSystem/ParticleGenerator.h"
+#include "ParticleSystem/ParticleRenderer.h"
+#include "ParticleSystem/SimulationAnimator.h"
+
 using namespace ofxLaser;
+using namespace ParticleSystem;
 
 class ShowElement
 {
@@ -58,6 +63,8 @@ protected:
 	ofParameter<int> currentSVG;
 	ofParameter<string> currentSVGFilename;
 	ofParameter<float> scale;
+	ofParameter<float> offsetX;
+	ofParameter<float> offsetY;
 	ofParameter<bool> rotate3D;
 	ofParameter<int> renderProfileIndex;
 	ofParameter<string> renderProfileLabel;
@@ -95,6 +102,8 @@ public:
 
 	virtual void audioIn(ofSoundBuffer & input);
 
+	virtual void setActive(bool a);
+
 protected:
 	//ofBaseApp* app;
 	ofxLaser::Graphic graphic;
@@ -110,6 +119,25 @@ protected:
 	float curVol = 0.0;
 	float smoothedVol;
 	float scaledVol;
+};
+
+// maybe RealtimeShowElement is 'LiveSoundReactiveShowElement' ?
+class RealtimeParticlesShowElement : public RealtimeShowElement
+{
+public:
+	RealtimeParticlesShowElement(string name) : RealtimeShowElement(name) {}
+	virtual void setup();
+	virtual void update();
+	virtual void draw();
+
+protected:
+	int     width, height;
+	float	prevTime = 0;
+
+	ParticleManager* _particleManager;
+	ParticleGenerator* _particleGenerator;
+	ParticleAnimator* _particleAnimator;
+	ParticleRenderer* _particleRenderer;
 };
 
 class RealtimeCirclesShowElement : public ShowElement

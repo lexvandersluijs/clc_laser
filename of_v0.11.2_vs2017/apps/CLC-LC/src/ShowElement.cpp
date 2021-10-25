@@ -30,15 +30,14 @@ void ShowElement::addParameter(ofAbstractParameter& param)
 	parameters.add(param);
 
 	if (!parameterJson.empty()) {
-		if (parameterJson.contains("Laser")) {
-			if (parameterJson["Laser"].contains("Custom")) {
-				//     auto value = loadJson["Laser"]["Custom"][param.getName()];
-				try {
-					ofDeserialize(parameterJson["Laser"]["Custom"], param);
-				}
-				catch (...) {
-
-				}
+		if (parameterJson.contains("group")) 
+		{
+			try {
+				ofDeserialize(parameterJson["group"], param);
+			}
+			catch (...) 
+			{
+				cout << "Problem deserializing parameter for ShowElement: '" + name + "' param: " + param.getName();
 			}
 		}
 	}
@@ -93,15 +92,14 @@ void SvgShowElement::setup()
 
 
 	addParameter(currentSVG.set("Current SVG", 0, 0, laserGraphics.size() - 1));
-	addParameter(currentSVGFilename.set("Filename"));
+	addParameter(currentSVGFilename.set("Filename", currentSVGFilename.get()));
 	addParameter(scale.set("SVG scale", 1.0, 0.1, 6));
+	addParameter(offsetX.set("Offset X", 400, 0, 800));
+	addParameter(offsetY.set("Offset Y", 400, 0, 800));
 	addParameter(rotate3D.set("Rotate 3D", true));
 	addParameter(renderProfileLabel.set("Render Profile name", ""));
 	addParameter(renderProfileIndex.set("Render Profile", 1, 0, 2));
 
-	ofParameter<string> description;
-	description.set("description", "INSTRUCTIONS : \nLeft and Right Arrows to change current SVG \nTAB to toggle output editor \nF to toggle full screen");
-	addParameter(description);
 }
 
 
@@ -113,9 +111,11 @@ void SvgShowElement::draw()
 {
 	float x = 0;
 	float spacing = 8;
-	//UI::startWindow("Settings", ImVec2(x, spacing), ImVec2(ofGetWindowWidth(), 0), ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize, true);
+	UI::startWindow("Settings - " + name, ImVec2(x, 804), ImVec2(ofGetWindowWidth()/2, 0));
 
-	//UI::endWindow();
+	ofxLaser::UI::addParameterGroup(parameters);
+
+	UI::endWindow();
 }
 
 void SvgShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager, string renderProfileName)
@@ -142,7 +142,7 @@ void SvgShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager, string re
 
 	ofPushMatrix();
 
-	ofTranslate(400, 400);
+	ofTranslate(offsetX, offsetY);
 	ofScale(scale, scale);
 	if (rotate3D) {
 		float angle = fmod(ofGetElapsedTimef() * 30, 180) - 90;
@@ -218,15 +218,16 @@ void TimelineShowElement::setup()
 	// ---------------- set up the timeline ----------------
 	ofxTimeline::removeCocoaMenusFromGlut("AllTracksExample");
 	timeline.setup();
-	timeline.setOffset(ofVec2f(0, ofGetWindowHeight() * 0.75f));
+	timeline.setOffset(ofVec2f(0, 800));
 
-	timeline.addAudioTrack("audio", "sound/4chan.wav");
+	timeline.addAudioTrack("audio", "sound/AUD-20211025-WA0003-vnc.mp3");
 	timeline.setDurationInSeconds(timeline.getAudioTrack("audio")->getDuration());
+	timeline.setLoopType(ofLoopType::OF_LOOP_NONE);
 
 	timeline.addCurves("curves", ofRange(0, 255));
 	timeline.addBangs("bangs");
 	timeline.enableSnapToOtherKeyframes(false);
-	timeline.setLoopType(OF_LOOP_NORMAL);
+
 
 	// we don't want the timeline to start when it is not on the active showElement
 	// do we disable this here and explicity toggle this via the SpaceBarPressed() function
@@ -321,7 +322,7 @@ void RealtimeShowElement::setup()
 	//settings.setInDevice(devices[0]);
 
 	auto devices = soundStream.getDeviceList(ofSoundDevice::Api::MS_DS);
-	settings.setInDevice(devices[4]);
+	settings.setInDevice(devices[2]);
 
 	// or get the default device for an specific api:
 	// settings.api = ofSoundDevice::Api::PULSE;
@@ -389,6 +390,13 @@ void RealtimeShowElement::draw()
 {
 }
 
+void RealtimeShowElement::setActive(bool a)
+{
+	ShowElement::setActive(a);
+
+	if (a == false)
+		soundStream.stop();
+}
 
 float sgn(float value)
 {
@@ -436,6 +444,50 @@ void RealtimeShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager, stri
 	laserManager.endDraw();
 }
 
+// -------------------------- RealtimeParticlesShowElement ---------------------
+
+void RealtimeParticlesShowElement::setup()
+{
+	int w = 800;
+	int h = 800;
+	_particleManager = new ParticleManager(50000);
+	_particleGenerator = new ParticleGenerator(_particleManager);
+	_particleGenerator->SetGenerationRate(1000);
+	_particleGenerator->SetParticleLifeTime(3.f);
+	//SimulationAnimator* simAnim = new SimulationAnimator(_particleManager);
+	//simAnim->AddForceField(new VortexForceField(ofVec2f(200.f, 200.f), 30.f));
+	//_particleAnimator = simAnim;
+	SimulationAnimator* fluidSimAnim = new SimulationAnimator(_particleManager);
+	_particleAnimator = fluidSimAnim;
+	_particleRenderer = new ParticleRenderer(_particleManager);
+
+	width = w;
+	height = h;
+
+}
+
+void RealtimeParticlesShowElement::update()
+{
+	// TODO: if prevTime == 0 then don't actually update -> timestep too large, but do set prevTime for next time
+	float currentTime = ofGetElapsedTimef();
+	float timeStep = currentTime - prevTime;
+	prevTime = currentTime;
+
+	if (timeStep < 1.0f) // ignore timesteps that are too large
+	{
+		_particleManager->Update(timeStep);
+		_particleAnimator->Update(currentTime, timeStep); // compute new properties (position, color, age, etc) all particles
+	}
+}
+
+void RealtimeParticlesShowElement::draw()
+{
+	// draw the glows of the lines
+	//glow.draw_dontEnableAlphaBlending(x, y, width, height);
+
+	// draw the lines themselves
+	_particleRenderer->Draw(ofVec2f(400, 400), 0.5f);
+}
 
 // --------------------------- RealtimeCirclesShowElement ------------------
 RealtimeCirclesShowElement::RealtimeCirclesShowElement(string name) : ShowElement(name)

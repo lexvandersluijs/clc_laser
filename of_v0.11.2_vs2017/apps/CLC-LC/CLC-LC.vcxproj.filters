@@ -783,6 +783,9 @@
     <Filter Include="addons\ofxVectorGraphics\libs">
       <UniqueIdentifier>{B341F552-35C4-7EB6-B3C9-9D96}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\ParticleSystem">
+      <UniqueIdentifier>{9e808a9f-7e1f-491f-868d-3a6bf29fafcd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h">
@@ -2311,6 +2314,30 @@
     </ClInclude>
     <ClInclude Include="..\..\addons\ofxVectorGraphics\libs\CreEPS_Types.hpp">
       <Filter>addons\ofxVectorGraphics\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleSystem\FluidSimulationAnimator.h">
+      <Filter>src\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleSystem\ForceField.h">
+      <Filter>src\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleSystem\ParticleAnimator.h">
+      <Filter>src\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleSystem\Particle.h">
+      <Filter>src\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleSystem\ParticleGenerator.h">
+      <Filter>src\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleSystem\ParticleManager.h">
+      <Filter>src\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleSystem\ParticleRenderer.h">
+      <Filter>src\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleSystem\SimulationAnimator.h">
+      <Filter>src\ParticleSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

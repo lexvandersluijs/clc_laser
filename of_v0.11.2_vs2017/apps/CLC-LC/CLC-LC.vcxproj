@@ -327,6 +327,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h" />
+    <ClInclude Include="src\ParticleSystem\FluidSimulationAnimator.h" />
+    <ClInclude Include="src\ParticleSystem\ForceField.h" />
+    <ClInclude Include="src\ParticleSystem\Particle.h" />
+    <ClInclude Include="src\ParticleSystem\ParticleAnimator.h" />
+    <ClInclude Include="src\ParticleSystem\ParticleGenerator.h" />
+    <ClInclude Include="src\ParticleSystem\ParticleManager.h" />
+    <ClInclude Include="src\ParticleSystem\ParticleRenderer.h" />
+    <ClInclude Include="src\ParticleSystem\SimulationAnimator.h" />
     <ClInclude Include="src\ShowElement.h" />
     <ClInclude Include="..\..\addons\ofxAudioDecoder\src\ofxAudioDecoder.h" />
     <ClInclude Include="..\..\addons\ofxAudioDecoder\libs\include\apple\CADebugMacros.h" />

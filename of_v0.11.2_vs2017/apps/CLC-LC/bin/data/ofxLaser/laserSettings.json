@@ -1,9 +1,10 @@
 {
     "Laser": {
         "Custom": {
-            "RT-Circles": "1",
+            "RT-Circles": "0",
             "SVG-Animation-Motorbikes": "0",
             "SVG-LEADERS": "0",
+            "SVG-LOGO": "1",
             "Song-1": "0",
             "SuperEllipse-1": "0"
         },

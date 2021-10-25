@@ -1,1 +1,14 @@
-<keyframes />
+<keyframes>
+    <key>
+        <time>00:00:01:017</time>
+        <value>0.632352948</value>
+    </key>
+    <key>
+        <time>00:00:02:025</time>
+        <value>0.588235259</value>
+    </key>
+    <key>
+        <time>00:00:02:701</time>
+        <value>0.573529422</value>
+    </key>
+</keyframes>

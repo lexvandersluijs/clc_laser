@@ -1,6 +1,6 @@
 {
     "0": {
-        "Brightness": "0.75",
+        "Brightness": "0.3",
         "Colour_calibration": {
             "blue_0": "0",
             "blue_100": "1",
@@ -26,15 +26,15 @@
                 "Smooth_home_position": "1",
                 "Sync_shift": "0",
                 "Sync_to_Target_framerate": "0",
-                "Target_framerate": "25"
+                "Target_framerate": "39.17"
             },
             "Colour_shift": "1.97",
             "Flip_Horizontal": "0",
             "Flip_Vertical": "0",
             "Output_position_offset": "0, 0",
             "Output_rotation": "0",
-            "Points_per_second": "20100",
-            "Speed": "2"
+            "Points_per_second": "22600",
+            "Speed": "1.52"
         },
         "Scanner_settings": {
             "Hold_off_after": "1",
@@ -65,7 +65,7 @@
             "description": "",
             "label": "Default"
         },
-        "dacId": "Etherdream 6FA5786A"
+        "dacId": "Etherdream 7BA5D86A"
     },
     "laserzones": [
         0
