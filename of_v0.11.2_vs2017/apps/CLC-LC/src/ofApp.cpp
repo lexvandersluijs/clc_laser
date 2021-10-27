@@ -20,8 +20,9 @@ void ofApp::setup(){
 	showElements.push_back(new SvgShowElement("SVG-LOGO"));
 	showElements.push_back(new TimelineShowElement("Song-1"));
 	showElements.push_back(new RealtimeShowElement("SuperEllipse-1"));
-	showElements.push_back(new SvgAnimationShowElement("SVG-Animation-Motorbikes"));
+	//showElements.push_back(new SvgAnimationShowElement("SVG-Animation-Motorbikes"));
 	showElements.push_back(new RealtimeCirclesShowElement("RT-Circles"));
+	//showElements.push_back(new RealtimeParticlesShowElement("RT-Particles"));
 
 	// initialize the selected state
 	selectedShowElementIndex = 0;

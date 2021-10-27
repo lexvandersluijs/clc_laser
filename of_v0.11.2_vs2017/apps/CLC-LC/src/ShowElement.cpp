@@ -2,6 +2,16 @@
 
 #include "ofxLaserUI.h"
 
+float sgn(float value)
+{
+	if (value < 0)
+		return -1;
+	else if (value == 0)
+		return 0;
+	else
+		return 1;
+}
+
 ShowElement::ShowElement(string n) 
 { 
 	name = n;
@@ -206,15 +216,102 @@ void SvgAnimationShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager, 
 
 	laserManager.endDraw();
 }
+// -------------------------- GraphicElement -------------------------------
+float MAX_PULSE_DURATION = 1; // sec
+void GraphicElement::pulse()
+{
+	pulseTime = ofGetElapsedTimef();
+
+}
+
+void GraphicElement::update()
+{
+	float timeDif = ofGetElapsedTimef() - pulseTime;
+	if (timeDif > 0 && timeDif < MAX_PULSE_DURATION)
+		pulseFactor = pow(0.001f, timeDif * 2); // exponential decay.. 
+	else
+		pulseFactor = 0;
+}
+
+ofPolyline& GraphicElement::getPolyline()
+{
+	return polyline;
+}
+ofColor GraphicElement::getColor()
+{
+	return color;
+}
+VerticalLine::VerticalLine(float x, ofColor c)
+{
+	xCoord = x;
+	color = c;
+}
+
+ofPolyline& VerticalLine::getPolyline()
+{
+	polyline.clear();
+
+	polyline.addVertex(xCoord + pulseFactor * 20, 0);
+	polyline.addVertex(xCoord + pulseFactor * 20, 800);
+
+	return polyline;
+}
+
+SuperEllipse::SuperEllipse(ofVec2f cent, ofColor c)
+{
+	center = cent;
+	color = c;
+}
+
+ofPolyline& SuperEllipse::getPolyline()
+{
+	polyline.clear();
+
+	int NUM_STEPS = 100;
+	float a = 1;
+	float b = 1;
+	float n = 4;
+	float scale = 100 + 100 * pulseFactor;
+	for (int i = 0; i < NUM_STEPS; i++)
+	{
+		float t = i / (float)(NUM_STEPS - 1);
+		float tp = t * M_TWO_PI;
+		float cost = cos(tp);
+		float sint = sin(tp);
+		float x = center.x + scale * pow(abs(cost), 2 / n) * a * sgn(cost);
+		float y = center.y + scale * pow(abs(sint), 2 / n) * b * sgn(sint);
+
+		polyline.addVertex(x, y, 0);
+	}
+	polyline.close();
+
+
+	return polyline;
+}
 
 // -------------------------- TimelineShowElement --------------------------
 TimelineShowElement::TimelineShowElement(string name) : ShowElement(name)
 {
+//	lines.push_back(VerticalLine(100, ofColor::red));
+//	lines.push_back(VerticalLine(300, ofColor::green));
+//	lines.push_back(VerticalLine(500, ofColor::orange));
 
+	lines.push_back(new SuperEllipse(ofVec2f(100, 100), ofColor::red));
+	lines.push_back(new SuperEllipse(ofVec2f(150, 500), ofColor::green));
+	lines.push_back(new SuperEllipse(ofVec2f(500, 400), ofColor::orange));
+}
+
+TimelineShowElement::~TimelineShowElement()
+{
+	for (int i = 0; i < lines.size(); i++)
+		delete lines[i];
 }
 
 void TimelineShowElement::setup()
 {
+	// set up the onset detection
+	onsetD.setup(OFX_ODS_ODF_RCOMPLEX, 2, 256);
+
 	// ---------------- set up the timeline ----------------
 	ofxTimeline::removeCocoaMenusFromGlut("AllTracksExample");
 	timeline.setup();
@@ -255,13 +352,79 @@ void TimelineShowElement::setActive(bool a)
 
 void TimelineShowElement::update()
 {
+	if (timeline.getIsPlaying())
+	{
+		//float* spectrum = ofSoundGetSpectrum(nBands);
+		vector<float>spectrumVector = timeline.getAudioTrack("audio")->getFFT();
+		int nBands = spectrumVector.size();
 
+		// the address of the first element is the start of the array
+		float* spectrum = &(spectrumVector[0]);
+
+		float avg = 0;
+		float avgLow = 0;
+		float avgMid = 0;
+		float avgHigh = 0;
+		int nrOfBlocks = 10;
+		float bandsBlock = nBands / nrOfBlocks;
+		int bandwidth1 = bandsBlock * 2;
+		int bandwidth2 = bandsBlock * 5; // all the rest are higher frequencies
+		int bandwidth3 = nBands - bandwidth2;
+		for (int i = 0; i < nBands; ++i)
+		{
+			if (i < bandwidth1)
+			{
+				avgLow += spectrum[i];
+			}
+			else if (i >= bandwidth1 && i < bandwidth2)
+			{
+				avgMid += spectrum[i];
+			}
+			else
+			{
+				avgHigh += spectrum[i];
+			}
+			avg += spectrum[i];
+		}
+
+		avg /= (float)nBands;
+		avgLow /= (float)bandwidth1;
+		avgMid /= (float)bandwidth2;
+		avgHigh /= (float)bandwidth3;
+		
+		cout << "l: " << avgLow << ", m: " << avgMid << ", h: " << avgHigh << ", avg: " << avg << endl;
+		float normalizationFactor = 10.f; // let's try to get these in the 0 to 1 range..
+		avg *= normalizationFactor;
+		avgLow *= normalizationFactor;
+		avgMid *= normalizationFactor;
+		avgHigh *= normalizationFactor * 2.f;
+
+		if (onsetD.isOnsetting(spectrum))
+		{
+			//musicShader->pulse(0);
+
+			// depending on which frequency band is strongest
+			// we pulse a certain graphic element
+			if((avgLow > avgMid) && (avgLow > avgHigh))
+				lines[0]->pulse();
+			else if((avgMid > avgLow) && (avgMid > avgHigh))
+				lines[1]->pulse();
+			else
+				lines[2]->pulse();
+		}
+	}
+
+	// process the pulse responses
+	for (int i = 0; i < lines.size(); i++)
+		lines[i]->update();
 }
 
 void TimelineShowElement::draw()
 {
 	// --------- draw the timeline --------------
 	timeline.draw(true);//false removed tickers, true(default) adds them
+
+
 }
 
 void TimelineShowElement::bangFired(ofxTLBangEventArgs& args) 
@@ -273,6 +436,13 @@ void TimelineShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager, stri
 {
 	laserManager.beginDraw();
 
+	graphic.clear();
+
+	for (int i = 0; i < lines.size(); i++)
+	{
+		graphic.addPolyline(lines[i]->getPolyline(), lines[i]->getColor(), false, true);
+	}
+
 	laserManager.drawLaserGraphic(graphic, 1, renderProfileName);
 
 	laserManager.endDraw();
@@ -283,6 +453,15 @@ RealtimeShowElement::RealtimeShowElement(string name) : ShowElement(name)
 {
 }
 
+void PrintDirectShowAudioDeviceList(const ofBaseSoundStream& bss)
+{
+	auto devices = bss.getDeviceList(ofSoundDevice::MS_DS);
+	if (!devices.empty()) {
+		ofLogNotice("ofBaseSoundStream::printDeviceList") << "Api: " << toString(ofSoundDevice::MS_DS);
+		ofLogNotice("ofBaseSoundStream::printDeviceList") << devices;
+	}
+}
+
 void RealtimeShowElement::setup()
 {
 	// open audio input
@@ -291,7 +470,8 @@ void RealtimeShowElement::setup()
 	// 44100 samples per second
 	// 256 samples per buffer
 	// 4 num buffers (latency)
-	soundStream.printDeviceList();
+	//soundStream.printDeviceList();
+	PrintDirectShowAudioDeviceList(*soundStream.getSoundStream());
 
 	int BUFFER_SIZE = 256;
 
@@ -398,15 +578,6 @@ void RealtimeShowElement::setActive(bool a)
 		soundStream.stop();
 }
 
-float sgn(float value)
-{
-	if (value < 0)
-		return -1;
-	else if (value == 0)
-		return 0;
-	else
-		return 1;
-}
 
 void RealtimeShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager, string renderProfileName)
 {
@@ -448,17 +619,20 @@ void RealtimeShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager, stri
 
 void RealtimeParticlesShowElement::setup()
 {
+	RealtimeShowElement::setup();
+
 	int w = 800;
 	int h = 800;
-	_particleManager = new ParticleManager(50000);
+	_particleManager = new ParticleManager(20);
 	_particleGenerator = new ParticleGenerator(_particleManager);
 	_particleGenerator->SetGenerationRate(1000);
-	_particleGenerator->SetParticleLifeTime(3.f);
-	//SimulationAnimator* simAnim = new SimulationAnimator(_particleManager);
-	//simAnim->AddForceField(new VortexForceField(ofVec2f(200.f, 200.f), 30.f));
-	//_particleAnimator = simAnim;
-	SimulationAnimator* fluidSimAnim = new SimulationAnimator(_particleManager);
-	_particleAnimator = fluidSimAnim;
+	_particleGenerator->SetParticleLifeTime(1.f);
+	SimulationAnimator* simAnim = new SimulationAnimator(_particleManager);
+	simAnim->AddForceField(new PointForceField(ofVec2f(400.f, 400.f), 5.f));
+	//simAnim->AddForceField(new VortexForceField(ofVec2f(400.f, 400.f), 5.f));
+	_particleAnimator = simAnim;
+	//SimulationAnimator* fluidSimAnim = new SimulationAnimator(_particleManager);
+	//_particleAnimator = fluidSimAnim;
 	_particleRenderer = new ParticleRenderer(_particleManager);
 
 	width = w;
@@ -468,13 +642,17 @@ void RealtimeParticlesShowElement::setup()
 
 void RealtimeParticlesShowElement::update()
 {
-	// TODO: if prevTime == 0 then don't actually update -> timestep too large, but do set prevTime for next time
+	RealtimeShowElement::update();
+
 	float currentTime = ofGetElapsedTimef();
 	float timeStep = currentTime - prevTime;
 	prevTime = currentTime;
 
 	if (timeStep < 1.0f) // ignore timesteps that are too large
 	{
+		ofVec2f direction = ofVec2f(ParticleGenerator::RandomCentered(5.f), ParticleGenerator::RandomCentered(5.f));
+		direction.normalize();
+		_particleGenerator->Generate(timeStep, ofVec2f(400, 400), direction, 1.f);
 		_particleManager->Update(timeStep);
 		_particleAnimator->Update(currentTime, timeStep); // compute new properties (position, color, age, etc) all particles
 	}
@@ -482,11 +660,35 @@ void RealtimeParticlesShowElement::update()
 
 void RealtimeParticlesShowElement::draw()
 {
+	RealtimeShowElement::draw();
+
 	// draw the glows of the lines
 	//glow.draw_dontEnableAlphaBlending(x, y, width, height);
 
 	// draw the lines themselves
-	_particleRenderer->Draw(ofVec2f(400, 400), 0.5f);
+	_particleRenderer->Draw(ofVec2f(0, 0), 0.5f);
+}
+
+void RealtimeParticlesShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager, string renderProfileName)
+{
+	graphic.clear();
+
+	ofPolyline line;
+
+	Particle* particles = _particleManager->GetParticlesArray();
+	for (int i = 0; i < _particleManager->GetNrOfActiveParticles(); i++)
+	{
+		line.clear();
+		line.addVertex(particles[i].Position.x, particles[i].Position.y);
+		line.addVertex(particles[i].Position.x + particles[i].Speed.x * 5, particles[i].Position.y + particles[i].Speed.y * 5);
+
+		graphic.addPolyline(line, ofColor(255.0f, 255.0f, 0.0f, 255.0f), false, true);
+	}
+
+	laserManager.beginDraw();
+	laserManager.drawLaserGraphic(graphic, 1, renderProfileName);
+	laserManager.endDraw();
+
 }
 
 // --------------------------- RealtimeCirclesShowElement ------------------
@@ -539,6 +741,8 @@ void RealtimeCirclesShowElement::stop()
 
 void RealtimeCirclesShowElement::update()
 {
+	pulsing = false;
+
 	// compute FFT
 	if (playing)
 	{
@@ -550,6 +754,8 @@ void RealtimeCirclesShowElement::update()
 			{
 				//musicShader->pulse(0);
 				cout << "Onset detected" << endl;
+
+				pulsing = true;
 			}
 		}
 	}
@@ -559,7 +765,7 @@ void RealtimeCirclesShowElement::draw()
 {
 }
 
-void RealtimeCirclesShowElement::UpdateGraphic()
+void RealtimeCirclesShowElement::UpdateGraphic(ofColor color)
 {
 	ellipseGraphic.clear();
 
@@ -585,7 +791,7 @@ void RealtimeCirclesShowElement::UpdateGraphic()
 	ellipse.close();
 	//graphic2.connectLineSegments();
 
-	ellipseGraphic.addPolyline(ellipse, ofColor(255.0f, 255.0f, 0.0f, 255.0f), false, true);
+	ellipseGraphic.addPolyline(ellipse, color, false, true);
 }
 
 void RealtimeCirclesShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager, string renderProfileName)
@@ -610,14 +816,22 @@ void RealtimeCirclesShowElement::drawLaserGraphic(ofxLaser::Manager& laserManage
 		}
 
 		// polylines get projected inside the drawLaserGraphic function, so we need a new set each time!
-		UpdateGraphic();
+		ofColor c = ofColor(255.0f, 255.0f, 0.0f, 255.0f);
+		if (snd.getIsPlaying())
+			c = ofColor::red;
+
+		UpdateGraphic(c);
 
 		ofTranslate(400, 400);
-		ofScale(scale, scale);
+
+		float s = scale;
+		if (pulsing)
+			s = scale * 1.2;
+
+		ofScale(s, s);
 
 		float angle = fmod(ofGetElapsedTimef() * 30, 180) - 90;
 		ofRotateYDeg(angle);
-
 
 		laserManager.drawLaserGraphic(ellipseGraphic, 1, renderProfileName);
 

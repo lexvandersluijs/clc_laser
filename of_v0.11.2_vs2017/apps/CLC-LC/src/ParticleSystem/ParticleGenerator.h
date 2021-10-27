@@ -83,7 +83,7 @@ public:
 		return generatedCount;
 	}
 
-	float RandomCentered(float scale)
+	static float RandomCentered(float scale)
 	{
 		return ofRandomf() * scale; // ofRandomF is between -1 and 1
 	}

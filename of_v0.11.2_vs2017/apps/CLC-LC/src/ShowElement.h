@@ -129,6 +129,7 @@ public:
 	virtual void setup();
 	virtual void update();
 	virtual void draw();
+	virtual void drawLaserGraphic(ofxLaser::Manager& laserManager, string renderProfileName);
 
 protected:
 	int     width, height;
@@ -158,7 +159,7 @@ public:
 	void stop();
 
 protected:
-	void UpdateGraphic();
+	void UpdateGraphic(ofColor color);
 
 	ofxLaser::Graphic ellipseGraphic;
 	//ofxLaser::Graphic circle2;
@@ -170,13 +171,51 @@ protected:
 	ofSoundPlayer snd;
 	ofxOnsetDetection onsetD;
 
+	bool pulsing = false;
+};
 
+class GraphicElement
+{
+public:
+	virtual ~GraphicElement() {}
+	virtual void pulse();
+	virtual void update();
+	virtual ofPolyline& getPolyline();
+	ofColor getColor();
+
+protected:
+	float pulseTime;
+	float pulseFactor;
+
+	ofPolyline polyline;
+	ofColor color;
+};
+
+class VerticalLine : public GraphicElement
+{
+public:
+	VerticalLine(float x, ofColor c);
+	virtual ofPolyline& getPolyline();
+
+protected:
+	float xCoord;
+};
+
+class SuperEllipse : public GraphicElement
+{
+public:
+	SuperEllipse(ofVec2f center, ofColor c);
+	virtual ofPolyline& getPolyline();
+
+protected:
+	ofVec2f center;
 };
 
 class TimelineShowElement : public ShowElement
 {
 public:
 	TimelineShowElement(string name);
+	~TimelineShowElement();
 
 	virtual void setup();
 	virtual void update();
@@ -190,7 +229,9 @@ public:
 protected:
 	ofxTimeline timeline;
 	ofxLaser::Graphic graphic;
+	ofxOnsetDetection onsetD;
 
 	void bangFired(ofxTLBangEventArgs& args);
 
+	vector<GraphicElement*> lines;
 };
