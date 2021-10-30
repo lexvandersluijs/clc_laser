@@ -78,12 +78,15 @@ void Audio::calc() {
 	high.update(high_amount);
 	volume.update(curVol);
 
-	cout << "----------------- Audio.cpp -------------------" << endl;
-	for (int q = 0; q < BUFFER_SIZE; q++)
+	if (false)
 	{
-		cout << magnitude[q] << ", ";
+		cout << "----------------- Audio.cpp -------------------" << endl;
+		for (int q = 0; q < BUFFER_SIZE; q++)
+		{
+			cout << magnitude[q] << ", ";
+		}
+		cout << "----------------- /Audio.cpp -------------------" << endl;
 	}
-	cout << "----------------- /Audio.cpp -------------------" << endl;
 
 	isOnsetting = onsetD.isOnsetting(&magnitude[0]);
 }

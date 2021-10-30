@@ -22,8 +22,8 @@ void ofApp::setup(){
 	showElements.push_back(new SvgShowElement("Mask Calibration"));
 	showElements.push_back(new SvgShowElement("SVG-LEADERS"));
 	showElements.push_back(new SvgShowElement("SVG-LOGO-LC21"));
-	showElements.push_back(new TimelineWithAudioShowElement("Song-1", "sound/AUD-20211025-WA0003-vnc.mp3", new SuperEllipseSet(4, 100, 100)));
-	showElements.push_back(new TimelineWithAudioShowElement("Song-2-Lines", "sound/NextStep_CLCEdit_Richard.mp3", new LineSet()));
+	//showElements.push_back(new TimelineWithAudioShowElement("Song-1", "sound/AUD-20211025-WA0003-vnc.mp3", new SuperEllipseSet(4, 100, 100)));
+	//showElements.push_back(new TimelineWithAudioShowElement("Song-2-Lines", "sound/NextStep_CLCEdit_Richard.mp3", new LineSet()));
 	//showElements.push_back(new TimelineWithAudioShowElement("Song-3-Concentric", "sound/NextStep_CLCEdit_Richard.mp3", new ConcentricCircleSet()));
 	showElements.push_back(new RealtimeAudioShowElement("SuperEllipse-1", "Microphone (Realtek(R) Audio)", new SuperEllipseSet(2, 100, 100)));
 	//showElements.push_back(new SvgAnimationShowElement("SVG-Animation-Motorbikes"));

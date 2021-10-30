@@ -193,6 +193,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Audio.cpp" />
+    <ClCompile Include="src\BeatDetect.cpp" />
     <ClCompile Include="src\fft.cpp" />
     <ClCompile Include="src\GraphicElement.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -334,6 +335,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Audio.h" />
+    <ClInclude Include="src\BeatDetect.h" />
     <ClInclude Include="src\fft.h" />
     <ClInclude Include="src\GraphicElement.h" />
     <ClInclude Include="src\ofApp.h" />

@@ -424,6 +424,9 @@
     <ClCompile Include="src\fft.cpp">
       <Filter>src\Audio</Filter>
     </ClCompile>
+    <ClCompile Include="src\BeatDetect.cpp">
+      <Filter>src\Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -2382,6 +2385,9 @@
       <Filter>src\Audio</Filter>
     </ClInclude>
     <ClInclude Include="src\fft.h">
+      <Filter>src\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BeatDetect.h">
       <Filter>src\Audio</Filter>
     </ClInclude>
   </ItemGroup>

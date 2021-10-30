@@ -45,6 +45,8 @@ public:
 	//void drawBeats();
 	void audioReceived(float* input, int bufferSize);
 
+	float* getMagnitude() { return magnitude; }
+
 	// detect beats
 	void enableBeatDetect() { bDetectBeat = true; }
 	void disableBeatDetect() { bDetectBeat = false; }

@@ -2,6 +2,7 @@
 
 #include "ShowElement.h"
 #include "Audio.h"
+#include "BeatDetect.h"
 
 class RealtimeAudioShowElement : public ShowElement, ofBaseSoundInput
 {
@@ -31,6 +32,9 @@ protected:
 
 	bool audioReceived = false;
 	Audio audioProcessor;
+	int fft_size = 512;
+	beatDetect bd;
+	ofxOnsetDetection onsetD;
 
 	bool isPlaying = false;
 };
@@ -88,6 +92,7 @@ protected:
 	int nBands = 1024;
 	ofSoundPlayer snd;
 	ofxOnsetDetection onsetD;
+
 
 	bool pulsing = false;
 };

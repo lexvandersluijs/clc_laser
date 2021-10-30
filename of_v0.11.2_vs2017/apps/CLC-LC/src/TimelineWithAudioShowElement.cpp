@@ -115,12 +115,15 @@ void TimelineWithAudioShowElement::update()
 
 		if (onsetD.isOnsetting(spectrum))
 		{
-			cout << "----------------- TimelineWithAudioShowElement.cpp -------------------" << endl;
-			for (int q = 0; q < spectrumVector.size(); q++)
+			if (false)
 			{
-				cout << spectrumVector[q] << ", ";
+				cout << "----------------- TimelineWithAudioShowElement.cpp -------------------" << endl;
+				for (int q = 0; q < spectrumVector.size(); q++)
+				{
+					cout << spectrumVector[q] << ", ";
+				}
+				cout << "----------------- /TimelineWithAudioShowElement.cpp -------------------" << endl;
 			}
-			cout << "----------------- /TimelineWithAudioShowElement.cpp -------------------" << endl;
 			//musicShader->pulse(0);
 
 			// depending on which frequency band is strongest
