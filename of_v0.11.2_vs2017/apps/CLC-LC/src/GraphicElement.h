@@ -32,6 +32,16 @@ protected:
 	float xCoord;
 };
 
+class HorizontalLine : public GraphicElement
+{
+public:
+	HorizontalLine(float y, ofColor c);
+	virtual ofPolyline& getPolyline();
+
+protected:
+	float yCoord;
+};
+
 class SuperEllipse : public GraphicElement
 {
 public:
@@ -105,6 +115,15 @@ class LineSet : public GraphicSet
 {
 public:
 	LineSet();
+
+protected:
+
+};
+
+class HorizontalLineSet : public GraphicSet
+{
+public:
+	HorizontalLineSet();
 
 protected:
 

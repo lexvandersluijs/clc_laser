@@ -51,6 +51,22 @@ ofPolyline& VerticalLine::getPolyline()
 	return polyline;
 }
 
+HorizontalLine::HorizontalLine(float y, ofColor c)
+{
+	yCoord = y;
+	color = c;
+}
+
+ofPolyline& HorizontalLine::getPolyline()
+{
+	polyline.clear();
+
+	polyline.addVertex(0,   yCoord + pulseFactor * 20);
+	polyline.addVertex(800, yCoord + pulseFactor * 20);
+
+	return polyline;
+}
+
 SuperEllipse::SuperEllipse(float n, float a, float b, ofVec2f cent, ofColor c)
 {
 	param_n = n;
@@ -113,6 +129,13 @@ LineSet::LineSet()
 {
 	lines.push_back(new VerticalLine(100, ofColor::red));
 	lines.push_back(new VerticalLine(300, ofColor::green));
-	lines.push_back(new VerticalLine(500, ofColor::orange));
+	lines.push_back(new VerticalLine(400, ofColor::orange));
 }
 
+
+HorizontalLineSet::HorizontalLineSet()
+{
+	lines.push_back(new HorizontalLine(100, ofColor::red));
+	lines.push_back(new HorizontalLine(300, ofColor::green));
+	lines.push_back(new HorizontalLine(400, ofColor::orange));
+}
