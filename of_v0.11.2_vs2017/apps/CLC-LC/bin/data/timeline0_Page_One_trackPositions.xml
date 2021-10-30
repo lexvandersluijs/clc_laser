@@ -2,19 +2,19 @@
     <element name="audio">
         <x>0.000000000</x>
         <y>857.000000000</y>
-        <width>1920.000000000</width>
+        <width>1400.000000000</width>
         <height>40.000000000</height>
     </element>
     <element name="bangs">
         <x>0.000000000</x>
         <y>1040.000000000</y>
-        <width>1920.000000000</width>
+        <width>1400.000000000</width>
         <height>68.000000000</height>
     </element>
     <element name="curves">
         <x>0.000000000</x>
         <y>929.000000000</y>
-        <width>1920.000000000</width>
+        <width>1400.000000000</width>
         <height>79.000000000</height>
     </element>
 </positions>

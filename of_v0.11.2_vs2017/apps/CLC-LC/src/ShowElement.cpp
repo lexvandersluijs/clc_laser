@@ -54,6 +54,17 @@ void ShowElement::saveParameters()
 	bool savesuccess = ofSavePrettyJson("showElements/" + name + ".json", json);
 }
 
+void ShowElement::draw()
+{
+	float x = 0;
+	float spacing = 8;
+	UI::startWindow("Settings - " + name, ImVec2(x, 804), ImVec2(ofGetWindowWidth() / 2, 0));
+
+	ofxLaser::UI::addParameterGroup(parameters);
+
+	UI::endWindow();
+}
+
 // -------------------------- SvgShowElement --------------------------
 SvgShowElement::SvgShowElement(string name) : ShowElement(name)
 {
@@ -116,16 +127,7 @@ void SvgShowElement::update()
 {
 
 }
-void SvgShowElement::draw()
-{
-	float x = 0;
-	float spacing = 8;
-	UI::startWindow("Settings - " + name, ImVec2(x, 804), ImVec2(ofGetWindowWidth()/2, 0));
 
-	ofxLaser::UI::addParameterGroup(parameters);
-
-	UI::endWindow();
-}
 
 void SvgShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager, string renderProfileName)
 {

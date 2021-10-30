@@ -35,10 +35,16 @@ protected:
 class SuperEllipse : public GraphicElement
 {
 public:
-	SuperEllipse(ofVec2f center, ofColor c);
+	SuperEllipse(float n, float a, float b, ofVec2f center, ofColor c);
 	virtual ofPolyline& getPolyline();
 
+	void setParams(float n, float a, float b) { param_n = n; param_a = a; param_b = b; }
+
 protected:
+	float param_n;
+	float param_a;
+	float param_b;
+
 	ofVec2f center;
 };
 
@@ -79,12 +85,21 @@ protected:
 class SuperEllipseSet : public GraphicSet
 {
 public:
-	SuperEllipseSet();
+	SuperEllipseSet(float n, float a, float b);
+	void setParams(float n, float a, float b);
 
 protected:
 
 };
 
+class ConcentricCircleSet : public GraphicSet
+{
+public:
+	ConcentricCircleSet();
+
+protected:
+
+};
 
 class LineSet : public GraphicSet
 {

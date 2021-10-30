@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ShowElement.h"
+#include "Audio.h"
 
 class TimelineWithAudioShowElement : public ShowElement
 {

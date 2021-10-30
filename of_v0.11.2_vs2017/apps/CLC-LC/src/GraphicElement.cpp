@@ -51,8 +51,12 @@ ofPolyline& VerticalLine::getPolyline()
 	return polyline;
 }
 
-SuperEllipse::SuperEllipse(ofVec2f cent, ofColor c)
+SuperEllipse::SuperEllipse(float n, float a, float b, ofVec2f cent, ofColor c)
 {
+	param_n = n;
+	param_a = a;
+	param_b = b;
+
 	center = cent;
 	color = c;
 }
@@ -62,18 +66,17 @@ ofPolyline& SuperEllipse::getPolyline()
 	polyline.clear();
 
 	int NUM_STEPS = 32;
-	float a = 1;
-	float b = 1;
-	float n = 4;
-	float scale = 100 + 100 * pulseFactor;
+
+	float a = param_a * (1 + pulseFactor);
+	float b = param_b * (1 + pulseFactor);
 	for (int i = 0; i < NUM_STEPS; i++)
 	{
 		float t = i / (float)(NUM_STEPS - 1);
 		float tp = t * M_TWO_PI;
 		float cost = cos(tp);
 		float sint = sin(tp);
-		float x = center.x + scale * pow(abs(cost), 2 / n) * a * sgn(cost);
-		float y = center.y + scale * pow(abs(sint), 2 / n) * b * sgn(sint);
+		float x = center.x + pow(abs(cost), 2 / param_n) * a * sgn(cost);
+		float y = center.y + pow(abs(sint), 2 / param_n) * b * sgn(sint);
 
 		polyline.addVertex(x, y, 0);
 	}
@@ -83,11 +86,26 @@ ofPolyline& SuperEllipse::getPolyline()
 	return polyline;
 }
 
-SuperEllipseSet::SuperEllipseSet()
+SuperEllipseSet::SuperEllipseSet(float n, float a, float b)
 {
-	lines.push_back(new SuperEllipse(ofVec2f(100, 100), ofColor::red));
-	lines.push_back(new SuperEllipse(ofVec2f(150, 500), ofColor::green));
-	lines.push_back(new SuperEllipse(ofVec2f(500, 400), ofColor::orange));
+	lines.push_back(new SuperEllipse(n, a, b, ofVec2f(100, 100), ofColor::red));
+	lines.push_back(new SuperEllipse(n, a, b, ofVec2f(150, 500), ofColor::green));
+	lines.push_back(new SuperEllipse(n, a, b, ofVec2f(500, 400), ofColor::orange));
+}
+
+void SuperEllipseSet::setParams(float n, float a, float b)
+{
+	for (int i = 0; i < lines.size(); i++)
+	{
+		(dynamic_cast<SuperEllipse*>(lines[i]))->setParams(n, a, b);
+	}
+}
+
+ConcentricCircleSet::ConcentricCircleSet()
+{
+	lines.push_back(new SuperEllipse(2, 80, 80, ofVec2f(400, 400), ofColor::red));
+	lines.push_back(new SuperEllipse(2, 120, 120, ofVec2f(400, 400), ofColor::green));
+	lines.push_back(new SuperEllipse(2, 140, 140, ofVec2f(400, 400), ofColor::orange));
 }
 
 

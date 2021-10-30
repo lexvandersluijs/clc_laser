@@ -412,6 +412,18 @@
     <ClCompile Include="src\GraphicElement.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Audio.cpp">
+      <Filter>src\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Threshold.cpp">
+      <Filter>src\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SmoothValue.cpp">
+      <Filter>src\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fft.cpp">
+      <Filter>src\Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -794,6 +806,9 @@
     </Filter>
     <Filter Include="src\ParticleSystem">
       <UniqueIdentifier>{9e808a9f-7e1f-491f-868d-3a6bf29fafcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Audio">
+      <UniqueIdentifier>{d07a9202-6406-4457-a026-6e217f8c95d3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -2356,6 +2371,18 @@
     </ClInclude>
     <ClInclude Include="src\RealtimeAudioShowElement.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SmoothValue.h">
+      <Filter>src\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Threshold.h">
+      <Filter>src\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Audio.h">
+      <Filter>src\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fft.h">
+      <Filter>src\Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

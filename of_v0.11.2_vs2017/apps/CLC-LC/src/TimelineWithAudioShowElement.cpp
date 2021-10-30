@@ -112,8 +112,15 @@ void TimelineWithAudioShowElement::update()
 		avgMid *= normalizationFactor;
 		avgHigh *= normalizationFactor * 2.f;
 
+
 		if (onsetD.isOnsetting(spectrum))
 		{
+			cout << "----------------- TimelineWithAudioShowElement.cpp -------------------" << endl;
+			for (int q = 0; q < spectrumVector.size(); q++)
+			{
+				cout << spectrumVector[q] << ", ";
+			}
+			cout << "----------------- /TimelineWithAudioShowElement.cpp -------------------" << endl;
 			//musicShader->pulse(0);
 
 			// depending on which frequency band is strongest

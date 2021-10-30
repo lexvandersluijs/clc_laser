@@ -1,12 +1,14 @@
 #pragma once
 
 #include "ShowElement.h"
+#include "Audio.h"
 
 class RealtimeAudioShowElement : public ShowElement, ofBaseSoundInput
 {
 public:
 	//RealtimeShowElement(ofBaseApp* theApp, string name);
-	RealtimeAudioShowElement(string name, string inputDeviceName);
+	RealtimeAudioShowElement(string name, string inputDeviceName, GraphicSet* graphicsset);
+	virtual ~RealtimeAudioShowElement();
 
 	virtual void setup();
 	virtual void update();
@@ -16,23 +18,21 @@ public:
 	virtual void audioIn(ofSoundBuffer & input);
 
 	virtual void setActive(bool a);
+	virtual void SpaceBarPressed();
 
 protected:
 	//ofBaseApp* app;
-	string inputDeviceName;
+	string inputDeviceNameFromConstructor;
+	ofParameter<string> inputDeviceName;
+
+	GraphicSet* graphicSet;
 	ofxLaser::Graphic graphic;
 	ofSoundStream soundStream;
 
-	vector <float> left;
-	vector <float> right;
-	vector <float> volHistory;
+	bool audioReceived = false;
+	Audio audioProcessor;
 
-	int 	bufferCounter;
-	int 	drawCounter;
-
-	float curVol = 0.0;
-	float smoothedVol;
-	float scaledVol;
+	bool isPlaying = false;
 };
 
 
@@ -43,7 +43,7 @@ protected:
 class RealtimeParticlesShowElement : public RealtimeAudioShowElement
 {
 public:
-	RealtimeParticlesShowElement(string name, string inputdevicename) : RealtimeAudioShowElement(name, inputdevicename) {}
+	RealtimeParticlesShowElement(string name, string inputdevicename, GraphicSet* graphicsset) : RealtimeAudioShowElement(name, inputdevicename, graphicsset) {}
 	virtual void setup();
 	virtual void update();
 	virtual void draw();
@@ -62,7 +62,7 @@ protected:
 class RealtimeCirclesShowElement : public RealtimeAudioShowElement
 {
 public:
-	RealtimeCirclesShowElement(string name, string inputdevicename);
+	RealtimeCirclesShowElement(string name, string inputdevicename, GraphicSet* graphicsset);
 
 	virtual void setup();
 	virtual void update();

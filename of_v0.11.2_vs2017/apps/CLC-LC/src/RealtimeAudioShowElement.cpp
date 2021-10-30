@@ -1,9 +1,17 @@
 #include "RealtimeAudioShowElement.h"
 
 // --------------------------- RealtimeAudioShowElement ------------------
-RealtimeAudioShowElement::RealtimeAudioShowElement(string name, string inputdevicename) : ShowElement(name)
+RealtimeAudioShowElement::RealtimeAudioShowElement(string name, string inputdevicename, GraphicSet* graphicset) : ShowElement(name)
 {
-	inputDeviceName = inputdevicename;
+	inputDeviceNameFromConstructor = inputdevicename;
+	graphicSet = graphicset;
+
+}
+
+RealtimeAudioShowElement::~RealtimeAudioShowElement()
+{
+	if(graphicSet != NULL)
+		delete graphicSet;
 }
 
 void PrintDirectShowAudioDeviceList(const ofBaseSoundStream& bss)
@@ -25,131 +33,130 @@ void RealtimeAudioShowElement::setup()
 	// 4 num buffers (latency)
 	//soundStream.printDeviceList();
 	PrintDirectShowAudioDeviceList(*soundStream.getSoundStream());
-
-	int BUFFER_SIZE = 256;
-
-	//if you want to set a different device id
-	//soundStream.setDeviceID(4); //bear in mind the device id corresponds to all audio devices, including  input-only and output-only devices.
-	//bool result = soundStream.setup(app, 2, 1, 44100, BUFFER_SIZE, 4);
-
-	int bufferSize = 256;
-
-	left.assign(bufferSize, 0.0);
-	right.assign(bufferSize, 0.0);
-	volHistory.assign(400, 0.0);
-
-	bufferCounter = 0;
-	drawCounter = 0;
-	smoothedVol = 0.0;
-	scaledVol = 0.0;
-
-	bool useNewDeviceSelection = true;
-
-	if (useNewDeviceSelection)
-	{
-		std::vector<ofSoundDevice> matchingDevices = soundStream.getMatchingDevices(inputDeviceName, 2, 0, ofSoundDevice::Api::MS_DS);
-
-		ofSoundStreamSettings settings;
-		settings.setInDevice(matchingDevices[0]);
-		settings.numBuffers = 1;
-		settings.setInListener(this);
-		settings.sampleRate = 44100;
-		settings.numOutputChannels = 0;
-		settings.numInputChannels = 2;
-		settings.bufferSize = bufferSize;
-		bool result = soundStream.setup(settings);
-	}
-	else
-	{
-		ofSoundStreamSettings settings;
-
-		// if you want to set the device id to be different than the default
-		// auto devices = soundStream.getDeviceList();
-		// settings.device = devices[4];
-
-		// you can also get devices for an specific api
-		//auto devices = soundStream.getDeviceList(ofSoundDevice::Api::MS_ASIO);
-		//settings.setInDevice(devices[0]);
-
-		auto devices = soundStream.getDeviceList(ofSoundDevice::Api::MS_DS);
-		settings.setInDevice(devices[2]);
-
-		// or get the default device for an specific api:
-		// settings.api = ofSoundDevice::Api::PULSE;
-
-		// or by name
-		//auto devices = soundStream.getMatchingDevices("default");
-		//if (!devices.empty()) {
-		//	settings.setInDevice(devices[0]);
-		//}
-		settings.numBuffers = 1;
-		settings.setInListener(this);
-		settings.sampleRate = 44100;
-		settings.numOutputChannels = 0;
-		settings.numInputChannels = 2;
-		settings.bufferSize = bufferSize;
-		bool result = soundStream.setup(settings);
-
-		if (result)
-			cout << "soundStream.setup() successful" << endl;
-		else
-			cout << "soundStream.setup() error" << endl;
-	}
 	
+	addParameter(inputDeviceName.set("Input device name", inputDeviceNameFromConstructor));
 }
 
 void RealtimeAudioShowElement::audioIn(ofSoundBuffer & input)
 {
-	curVol = 0.0;
+	vector<float> buffer = input.getBuffer();
 
-	// samples are "interleaved"
-	int numCounted = 0;
+	// amplify the microphone input..
+	for (int i = 0; i < buffer.size(); i++)
+		buffer[i] *= 5;
 
-	//lets go through each sample and calculate the root mean square which is a rough way to calculate volume	
-	size_t maxSample = input.getNumFrames();
-	if (maxSample != left.size())
-	{
-		left.resize(maxSample);
-		right.resize(maxSample);
-	}
+	// divide by two, since this function will split left and right, so the actual number of stereo samples is 256 if input size is 512
+	audioProcessor.update(&buffer[0], buffer.size() / 2); 
 
-	for (size_t i = 0; i < maxSample; i++) {
-		left[i] = input[i * 2] * 0.5;
-		right[i] = input[i * 2 + 1] * 0.5;
-
-		curVol += left[i] * left[i];
-		curVol += right[i] * right[i];
-		numCounted += 2;
-	}
-
-	//this is how we get the mean of rms :) 
-	curVol /= (float)numCounted;
-
-	// this is how we get the root of rms :) 
-	curVol = sqrt(curVol);
-
-	smoothedVol *= 0.93;
-	smoothedVol += 0.07 * curVol;
-
-	bufferCounter++;
+	audioReceived = true;
 }
 
 void RealtimeAudioShowElement::update()
 {
-	// compute FFT
+	if (audioReceived)
+	{
+		// compute FFT and such
+		audioProcessor.calc();
+
+		if (audioProcessor.getIsOnsetting())
+		{
+			cout << "RealtimeAudioShowElement isOnsetting" << endl;
+			//graphicSet->pulse(0);
+			float newRadius = 100 * (1.0f + 100 * audioProcessor.getAvgPower());
+			(dynamic_cast<SuperEllipseSet*>(graphicSet))->setParams(4, newRadius, newRadius);
+		}
+		graphicSet->update();
+	}
 }
+
 void RealtimeAudioShowElement::draw()
 {
+	float x = 0;
+	float spacing = 8;
+	UI::startWindow("Settings - " + name, ImVec2(x, 804), ImVec2(ofGetWindowWidth() / 2, 0));
+
+	ofxLaser::UI::addParameterGroup(parameters);
+
+	UI::endWindow();
 }
 
 void RealtimeAudioShowElement::setActive(bool a)
 {
 	ShowElement::setActive(a);
-
-	if (a == false)
-		soundStream.stop();
 }
 
+void RealtimeAudioShowElement::SpaceBarPressed()
+{
+	isPlaying = !isPlaying;
+
+	if (isPlaying)
+	{
+		//if you want to set a different device id
+		//soundStream.setDeviceID(4); //bear in mind the device id corresponds to all audio devices, including  input-only and output-only devices.
+		//bool result = soundStream.setup(app, 2, 1, 44100, BUFFER_SIZE, 4);
+
+		int bufferSize = 256;
+
+
+		bool useNewDeviceSelection = true;
+
+		if (useNewDeviceSelection)
+		{
+ 			std::vector<ofSoundDevice> matchingDevices = soundStream.getMatchingDevices(inputDeviceName, 2, 0, ofSoundDevice::Api::MS_DS);
+
+			ofSoundStreamSettings settings;
+			settings.setInDevice(matchingDevices[0]);
+			settings.numBuffers = 1;
+			settings.setInListener(this);
+			settings.sampleRate = 44100;
+			settings.numOutputChannels = 0;
+			settings.numInputChannels = 2;
+			settings.bufferSize = bufferSize;
+			bool result = soundStream.setup(settings);
+		}
+		else
+		{
+			ofSoundStreamSettings settings;
+
+			// if you want to set the device id to be different than the default
+			// auto devices = soundStream.getDeviceList();
+			// settings.device = devices[4];
+
+			// you can also get devices for an specific api
+			//auto devices = soundStream.getDeviceList(ofSoundDevice::Api::MS_ASIO);
+			//settings.setInDevice(devices[0]);
+
+			auto devices = soundStream.getDeviceList(ofSoundDevice::Api::MS_DS);
+			settings.setInDevice(devices[2]);
+
+			// or get the default device for an specific api:
+			// settings.api = ofSoundDevice::Api::PULSE;
+
+			// or by name
+			//auto devices = soundStream.getMatchingDevices("default");
+			//if (!devices.empty()) {
+			//	settings.setInDevice(devices[0]);
+			//}
+			settings.numBuffers = 1;
+			settings.setInListener(this);
+			settings.sampleRate = 44100;
+			settings.numOutputChannels = 0;
+			settings.numInputChannels = 2;
+			settings.bufferSize = bufferSize;
+			bool result = soundStream.setup(settings);
+
+			if (result)
+				cout << "soundStream.setup() successful" << endl;
+			else
+				cout << "soundStream.setup() error" << endl;
+		}
+	}
+	else
+	{
+		audioReceived = false;
+		soundStream.stop();
+	}
+}
 
 void RealtimeAudioShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager, string renderProfileName)
 {
@@ -157,32 +164,9 @@ void RealtimeAudioShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager,
 
 	graphic.clear();
 
-	ofPolyline superEllipse;
-	int NUM_STEPS = 32;
-	float a = 1;
-	float b = 1;
-	float n = 4;
-	float scale = 100 + 10000 * curVol;
-	float offsetX = 400;
-	float offsetY = 400;
-	for (int i = 0; i < NUM_STEPS; i++)
-	{
-		float t = i / (float)(NUM_STEPS - 1);
-		float tp = t * M_TWO_PI;
-		float cost = cos(tp);
-		float sint = sin(tp);
-		float x = offsetX + scale * pow(abs(cost), 2 / n) * a * sgn(cost);
-		float y = offsetY + scale * pow(abs(sint), 2 / n) * b * sgn(sint);
-
-		superEllipse.addVertex(x, y, 0);
-	}
-	superEllipse.close();
-	//graphic2.connectLineSegments();
-
-	graphic.addPolyline(superEllipse, ofColor(255.0f, 255.0f, 0.0f, 255.0f), false, true);
+	graphicSet->drawToGraphic(graphic);
 
 	laserManager.drawLaserGraphic(graphic, 1, renderProfileName);
-
 
 	laserManager.endDraw();
 }
@@ -265,7 +249,8 @@ void RealtimeParticlesShowElement::drawLaserGraphic(ofxLaser::Manager& laserMana
 }
 
 // --------------------------- RealtimeCirclesShowElement ------------------
-RealtimeCirclesShowElement::RealtimeCirclesShowElement(string name, string inputdevicename) : RealtimeAudioShowElement(name, inputdevicename)
+RealtimeCirclesShowElement::RealtimeCirclesShowElement(string name, string inputdevicename, GraphicSet* graphicsset) 
+	: RealtimeAudioShowElement(name, inputdevicename, graphicSet)
 {
 
 }

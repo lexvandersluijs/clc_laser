@@ -19,13 +19,15 @@ ofApp::~ofApp()
 //--------------------------------------------------------------
 void ofApp::setup(){
 
+	showElements.push_back(new SvgShowElement("Mask Calibration"));
 	showElements.push_back(new SvgShowElement("SVG-LEADERS"));
-	showElements.push_back(new SvgShowElement("SVG-LOGO"));
-	showElements.push_back(new TimelineWithAudioShowElement("Song-1", "sound/AUD-20211025-WA0003-vnc.mp3", new SuperEllipseSet()));
-	showElements.push_back(new TimelineWithAudioShowElement("Song-2", "sound/NextStep_CLCEdit_Richard.mp3", new LineSet()));
-	showElements.push_back(new RealtimeAudioShowElement("SuperEllipse-1", "Microphone (Realtek(R) Audio)"));
+	showElements.push_back(new SvgShowElement("SVG-LOGO-LC21"));
+	showElements.push_back(new TimelineWithAudioShowElement("Song-1", "sound/AUD-20211025-WA0003-vnc.mp3", new SuperEllipseSet(4, 100, 100)));
+	showElements.push_back(new TimelineWithAudioShowElement("Song-2-Lines", "sound/NextStep_CLCEdit_Richard.mp3", new LineSet()));
+	//showElements.push_back(new TimelineWithAudioShowElement("Song-3-Concentric", "sound/NextStep_CLCEdit_Richard.mp3", new ConcentricCircleSet()));
+	showElements.push_back(new RealtimeAudioShowElement("SuperEllipse-1", "Microphone (Realtek(R) Audio)", new SuperEllipseSet(2, 100, 100)));
 	//showElements.push_back(new SvgAnimationShowElement("SVG-Animation-Motorbikes"));
-	showElements.push_back(new RealtimeCirclesShowElement("RT-Circles", "Microphone (Realtek(R) Audio)"));
+	//showElements.push_back(new RealtimeCirclesShowElement("RT-Circles", "Microphone (Realtek(R) Audio)", new ConcentricCircleSet()));
 	//showElements.push_back(new RealtimeParticlesShowElement("RT-Particles"));
 
 	// initialize the selected state

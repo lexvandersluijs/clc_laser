@@ -192,6 +192,8 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Audio.cpp" />
+    <ClCompile Include="src\fft.cpp" />
     <ClCompile Include="src\GraphicElement.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
@@ -326,9 +328,13 @@
     <ClCompile Include="..\..\addons\ofxTimeline\libs\ofOpenALSoundPlayer_TimelineAdditions\src\ofOpenALSoundPlayer_TimelineAdditions.cpp" />
     <ClCompile Include="..\..\addons\ofxVectorGraphics\src\ofxVectorGraphics.cpp" />
     <ClCompile Include="..\..\addons\ofxVectorGraphics\libs\CreEPS.cpp" />
+    <ClCompile Include="src\SmoothValue.cpp" />
+    <ClCompile Include="src\Threshold.cpp" />
     <ClCompile Include="src\TimelineWithAudioShowElement.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Audio.h" />
+    <ClInclude Include="src\fft.h" />
     <ClInclude Include="src\GraphicElement.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\ParticleSystem\FluidSimulationAnimator.h" />
@@ -847,6 +853,8 @@
     <ClInclude Include="..\..\addons\ofxVectorGraphics\src\ofxVectorGraphics.h" />
     <ClInclude Include="..\..\addons\ofxVectorGraphics\libs\CreEPS.hpp" />
     <ClInclude Include="..\..\addons\ofxVectorGraphics\libs\CreEPS_Types.hpp" />
+    <ClInclude Include="src\SmoothValue.h" />
+    <ClInclude Include="src\Threshold.h" />
     <ClInclude Include="src\TimelineWithAudioShowElement.h" />
   </ItemGroup>
   <ItemGroup>

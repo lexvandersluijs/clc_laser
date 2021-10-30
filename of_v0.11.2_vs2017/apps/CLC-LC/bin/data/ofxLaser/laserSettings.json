@@ -1,12 +1,12 @@
 {
     "Laser": {
         "Custom": {
-            "RT-Circles": "0",
+            "Mask_Calibration": "0",
             "SVG-LEADERS": "0",
-            "SVG-LOGO": "1",
+            "SVG-LOGO-LC21": "0",
             "Song-1": "0",
-            "Song-2": "0",
-            "SuperEllipse-1": "0"
+            "Song-2-Lines": "0",
+            "SuperEllipse-1": "1"
         },
         "Edit_laser": "1",
         "Global_brightness": "0.2",

@@ -4,7 +4,7 @@
 #include "ofxLaserManager.h"
 #include "SVGLoader.h"
 
-#include "ofxOnsetDetection.h"
+
 #include "ofxTimeline.h"
 #include "ofxTLAudioTrack.h"
 #include "ofxTLVideoTrack.h"
@@ -28,7 +28,7 @@ public:
 
 	virtual void setup() = 0;
 	virtual void update() = 0;
-	virtual void draw() = 0;
+	virtual void draw();
 	virtual void drawLaserGraphic(ofxLaser::Manager& laserManager, string renderProfileName) = 0;
 
 	void loadParameterJson();
@@ -57,7 +57,6 @@ public:
 
 	virtual void setup();
 	virtual void update();
-	virtual void draw();
 	virtual void drawLaserGraphic(ofxLaser::Manager& laserManager, string renderProfileName);
 
 protected:
