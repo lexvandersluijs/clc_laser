@@ -96,6 +96,11 @@ void SvgShowElement::setup()
 
 	addParameter(currentSVG.set("Current SVG", 0, 0, laserGraphics.size() - 1));
 	addParameter(currentSVGFilename.set("Filename", currentSVGFilename.get()));
+
+	addParameter(drawTwoSided.set("Draw two-sided", false));
+	addParameter(otherSideSVG.set("Other side SVG", 0, 0, laserGraphics.size() - 1));
+	addParameter(otherSideSVGFilename.set("Other side filename", otherSideSVGFilename.get()));
+
 	addParameter(scale.set("SVG scale", 1.0, 0.1, 6));
 	addParameter(offsetX.set("Offset X", 400, 0, 800));
 	addParameter(offsetY.set("Offset Y", 400, 0, 800));
@@ -148,13 +153,26 @@ void SvgShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager, string re
 
 	ofTranslate(offsetX, offsetY);
 	ofScale(scale, scale);
+
+	float modulo = rotate360 ? 360 : 180;
+	float angle = fmod(ofGetElapsedTimef() * 30, modulo) - 90;
+
+	int indexToDraw = currentSVG;
+	if (drawTwoSided.get())
+	{
+		if (angle > 90 && angle < 270)
+		{
+			indexToDraw = otherSideSVG;
+			angle += 180;
+		}
+	}
+
 	if (rotate3D) {
-		float modulo = rotate360 ? 360 : 180;
-		float angle = fmod(ofGetElapsedTimef() * 30, modulo) - 90;
 		ofRotateYDeg(angle);
 	}
+
 	if (laserGraphics.size() > currentSVG) {
-		laserManager.drawLaserGraphic(laserGraphics[currentSVG], 1, renderProfileName);
+		laserManager.drawLaserGraphic(laserGraphics[indexToDraw], 1, renderProfileName);
 	}
 	ofPopMatrix();
 

@@ -43,6 +43,7 @@
 *.exp
 *.ipdb
 *.iobj
+*.res
 
 # ofxLaser
 *.ofxlg

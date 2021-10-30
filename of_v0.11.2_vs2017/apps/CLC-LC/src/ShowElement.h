@@ -64,6 +64,11 @@ protected:
 
 	ofParameter<int> currentSVG;
 	ofParameter<string> currentSVGFilename;
+
+
+	ofParameter<int> otherSideSVG;
+	ofParameter<string> otherSideSVGFilename;
+	ofParameter<bool> drawTwoSided;
 	ofParameter<float> scale;
 	ofParameter<float> offsetX;
 	ofParameter<float> offsetY;

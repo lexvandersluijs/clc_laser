@@ -3,9 +3,9 @@
         "Custom": {
             "RT-Circles": "0",
             "SVG-LEADERS": "0",
-            "SVG-LOGO": "0",
+            "SVG-LOGO": "1",
             "Song-1": "0",
-            "Song-2": "1",
+            "Song-2": "0",
             "SuperEllipse-1": "0"
         },
         "Edit_laser": "1",
