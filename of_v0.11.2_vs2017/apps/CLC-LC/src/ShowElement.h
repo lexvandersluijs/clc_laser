@@ -66,6 +66,7 @@ protected:
 	ofParameter<float> offsetX;
 	ofParameter<float> offsetY;
 	ofParameter<bool> rotate3D;
+	ofParameter<bool> rotate360;
 	ofParameter<int> renderProfileIndex;
 	ofParameter<string> renderProfileLabel;
 
@@ -230,6 +231,11 @@ protected:
 	ofxTimeline timeline;
 	ofxLaser::Graphic graphic;
 	ofxOnsetDetection onsetD;
+
+	ofParameter<float> Mask1L;
+	ofParameter<float> Mask1R;
+	ofParameter<float> Mask2L;
+	ofParameter<float> Mask2R;
 
 	void bangFired(ofxTLBangEventArgs& args);
 

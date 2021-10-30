@@ -42,7 +42,7 @@ void ofApp::setup(){
 		laserManager.addCustomParameter(*param);
 	}
 
-
+	laserManager.renderLater = true;
 }
 
 

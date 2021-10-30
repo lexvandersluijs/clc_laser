@@ -1,12 +1,12 @@
 {
     "Laser": {
         "Custom": {
-            "Current_SVG": "3",
+            "Current_SVG": "0",
             "Render_Profile": "0",
             "Render_Profile_name": "Render Profile : OFXLASER_PROFILE_DEFAULT",
             "Rotate_3D": "1",
             "SVG_scale": "1.44",
-            "UnknownName": "4_liberation.svg",
+            "UnknownName": "1_ofxLaser.svg",
             "description": "INSTRUCTIONS : \nLeft and Right Arrows to change current SVG \nTAB to toggle output editor \nF to toggle full screen"
         },
         "Edit_laser": "1",

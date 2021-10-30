@@ -1,6 +1,7 @@
 #include "ShowElement.h"
 
 #include "ofxLaserUI.h"
+#include "ofxClipper.h"
 
 float sgn(float value)
 {
@@ -107,6 +108,7 @@ void SvgShowElement::setup()
 	addParameter(offsetX.set("Offset X", 400, 0, 800));
 	addParameter(offsetY.set("Offset Y", 400, 0, 800));
 	addParameter(rotate3D.set("Rotate 3D", true));
+	addParameter(rotate360.set("Rotate 360", false));
 	addParameter(renderProfileLabel.set("Render Profile name", ""));
 	addParameter(renderProfileIndex.set("Render Profile", 1, 0, 2));
 
@@ -155,7 +157,8 @@ void SvgShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager, string re
 	ofTranslate(offsetX, offsetY);
 	ofScale(scale, scale);
 	if (rotate3D) {
-		float angle = fmod(ofGetElapsedTimef() * 30, 180) - 90;
+		float modulo = rotate360 ? 360 : 180;
+		float angle = fmod(ofGetElapsedTimef() * 30, modulo) - 90;
 		ofRotateYDeg(angle);
 	}
 	if (laserGraphics.size() > currentSVG) {
@@ -267,7 +270,7 @@ ofPolyline& SuperEllipse::getPolyline()
 {
 	polyline.clear();
 
-	int NUM_STEPS = 100;
+	int NUM_STEPS = 32;
 	float a = 1;
 	float b = 1;
 	float n = 4;
@@ -311,6 +314,12 @@ void TimelineShowElement::setup()
 {
 	// set up the onset detection
 	onsetD.setup(OFX_ODS_ODF_RCOMPLEX, 2, 256);
+
+	// ----------- register parameters -----------------
+	addParameter(Mask1L.set("Mask 1 L", 50, 0, 800));
+	addParameter(Mask1R.set("Mask 1 R", 250, 0, 800));
+	addParameter(Mask2L.set("Mask 2 L", 350, 0, 800));
+	addParameter(Mask2R.set("Mask 2 R", 650, 0, 800));
 
 	// ---------------- set up the timeline ----------------
 	ofxTimeline::removeCocoaMenusFromGlut("AllTracksExample");
@@ -424,7 +433,13 @@ void TimelineShowElement::draw()
 	// --------- draw the timeline --------------
 	timeline.draw(true);//false removed tickers, true(default) adds them
 
+	float x = 0;
+	float spacing = 8;
+	UI::startWindow("Settings - " + name, ImVec2(x, 804), ImVec2(ofGetWindowWidth() / 2, 0));
 
+	ofxLaser::UI::addParameterGroup(parameters);
+
+	UI::endWindow();
 }
 
 void TimelineShowElement::bangFired(ofxTLBangEventArgs& args) 
@@ -438,11 +453,22 @@ void TimelineShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager, stri
 
 	graphic.clear();
 
+	bool clip = true;
 	for (int i = 0; i < lines.size(); i++)
 	{
 		graphic.addPolyline(lines[i]->getPolyline(), lines[i]->getColor(), false, true);
 	}
+	if (clip)
+	{
+		ofPath clippingPath1, clippingPath2;
+		clippingPath1.rectangle(Mask1L, 0, Mask1R - Mask1L, 800);
+		clippingPath2.rectangle(Mask2L, 0, Mask2R - Mask2L, 800);
+		vector<ofPath> clippingPaths;
+		clippingPaths.push_back(clippingPath1);
+		clippingPaths.push_back(clippingPath2);
 
+		graphic.intersectPaths(clippingPaths);
+	}
 	laserManager.drawLaserGraphic(graphic, 1, renderProfileName);
 
 	laserManager.endDraw();
@@ -586,7 +612,7 @@ void RealtimeShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager, stri
 	graphic.clear();
 
 	ofPolyline superEllipse;
-	int NUM_STEPS = 100;
+	int NUM_STEPS = 32;
 	float a = 1;
 	float b = 1;
 	float n = 4;
