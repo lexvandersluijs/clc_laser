@@ -403,6 +403,15 @@
     <ClCompile Include="..\..\addons\ofxVectorGraphics\libs\CreEPS.cpp">
       <Filter>addons\ofxVectorGraphics\libs</Filter>
     </ClCompile>
+    <ClCompile Include="src\TimelineWithAudioShowElement.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RealtimeAudioShowElement.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GraphicElement.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -2338,6 +2347,15 @@
     </ClInclude>
     <ClInclude Include="src\ParticleSystem\SimulationAnimator.h">
       <Filter>src\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GraphicElement.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TimelineWithAudioShowElement.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RealtimeAudioShowElement.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

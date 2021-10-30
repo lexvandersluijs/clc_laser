@@ -39,6 +39,10 @@
 *.user 
 *.VC.opendb
 .vs
+*.ilk
+*.exp
+*.ipdb
+*.iobj
 
 # ofxLaser
 *.ofxlg

@@ -1,5 +1,8 @@
 #include "ofApp.h"
 
+#include "RealtimeAudioShowElement.h"
+#include "TimelineWithAudioShowElement.h"
+
 // You can use the SVGLoader utility class to load an SVG sequence
 // as an animation. The example animated SVG sequence is from
 // a collaboration with comedian Bec Hill, see
@@ -18,10 +21,11 @@ void ofApp::setup(){
 
 	showElements.push_back(new SvgShowElement("SVG-LEADERS"));
 	showElements.push_back(new SvgShowElement("SVG-LOGO"));
-	showElements.push_back(new TimelineShowElement("Song-1"));
-	showElements.push_back(new RealtimeShowElement("SuperEllipse-1"));
+	showElements.push_back(new TimelineWithAudioShowElement("Song-1", "sound/AUD-20211025-WA0003-vnc.mp3", new SuperEllipseSet()));
+	showElements.push_back(new TimelineWithAudioShowElement("Song-2", "sound/NextStep_CLCEdit_Richard.mp3", new LineSet()));
+	showElements.push_back(new RealtimeAudioShowElement("SuperEllipse-1", "Microphone (Realtek(R) Audio)"));
 	//showElements.push_back(new SvgAnimationShowElement("SVG-Animation-Motorbikes"));
-	showElements.push_back(new RealtimeCirclesShowElement("RT-Circles"));
+	showElements.push_back(new RealtimeCirclesShowElement("RT-Circles", "Microphone (Realtek(R) Audio)"));
 	//showElements.push_back(new RealtimeParticlesShowElement("RT-Particles"));
 
 	// initialize the selected state

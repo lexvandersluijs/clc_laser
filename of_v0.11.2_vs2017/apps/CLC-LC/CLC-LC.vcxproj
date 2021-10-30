@@ -192,8 +192,10 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\GraphicElement.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
+    <ClCompile Include="src\RealtimeAudioShowElement.cpp" />
     <ClCompile Include="src\ShowElement.cpp" />
     <ClCompile Include="..\..\addons\ofxAudioDecoder\src\ofxAudioDecoder.cpp" />
     <ClCompile Include="..\..\addons\ofxAudioDecoder\libs\src\audiodecoderbase.cpp" />
@@ -324,8 +326,10 @@
     <ClCompile Include="..\..\addons\ofxTimeline\libs\ofOpenALSoundPlayer_TimelineAdditions\src\ofOpenALSoundPlayer_TimelineAdditions.cpp" />
     <ClCompile Include="..\..\addons\ofxVectorGraphics\src\ofxVectorGraphics.cpp" />
     <ClCompile Include="..\..\addons\ofxVectorGraphics\libs\CreEPS.cpp" />
+    <ClCompile Include="src\TimelineWithAudioShowElement.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GraphicElement.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\ParticleSystem\FluidSimulationAnimator.h" />
     <ClInclude Include="src\ParticleSystem\ForceField.h" />
@@ -335,6 +339,7 @@
     <ClInclude Include="src\ParticleSystem\ParticleManager.h" />
     <ClInclude Include="src\ParticleSystem\ParticleRenderer.h" />
     <ClInclude Include="src\ParticleSystem\SimulationAnimator.h" />
+    <ClInclude Include="src\RealtimeAudioShowElement.h" />
     <ClInclude Include="src\ShowElement.h" />
     <ClInclude Include="..\..\addons\ofxAudioDecoder\src\ofxAudioDecoder.h" />
     <ClInclude Include="..\..\addons\ofxAudioDecoder\libs\include\apple\CADebugMacros.h" />
@@ -842,6 +847,7 @@
     <ClInclude Include="..\..\addons\ofxVectorGraphics\src\ofxVectorGraphics.h" />
     <ClInclude Include="..\..\addons\ofxVectorGraphics\libs\CreEPS.hpp" />
     <ClInclude Include="..\..\addons\ofxVectorGraphics\libs\CreEPS_Types.hpp" />
+    <ClInclude Include="src\TimelineWithAudioShowElement.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">
