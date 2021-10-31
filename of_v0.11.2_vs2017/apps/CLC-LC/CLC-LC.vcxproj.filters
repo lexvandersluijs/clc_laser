@@ -427,6 +427,9 @@
     <ClCompile Include="src\BeatDetect.cpp">
       <Filter>src\Audio</Filter>
     </ClCompile>
+    <ClCompile Include="src\RealTimeParticlesShowElement.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -2389,6 +2392,9 @@
     </ClInclude>
     <ClInclude Include="src\BeatDetect.h">
       <Filter>src\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RealtimeParticlesShowElement.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

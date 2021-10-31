@@ -160,7 +160,7 @@ void SvgShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager, string re
 	float angle = fmod(ofGetElapsedTimef() * 30, modulo) - 90;
 
 	int indexToDraw = currentSVG;
-	if (drawTwoSided.get())
+	if (rotate3D && drawTwoSided.get())
 	{
 		if (angle > 90 && angle < 270)
 		{

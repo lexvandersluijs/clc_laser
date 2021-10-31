@@ -199,6 +199,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="src\RealtimeAudioShowElement.cpp" />
+    <ClCompile Include="src\RealTimeParticlesShowElement.cpp" />
     <ClCompile Include="src\ShowElement.cpp" />
     <ClCompile Include="..\..\addons\ofxAudioDecoder\src\ofxAudioDecoder.cpp" />
     <ClCompile Include="..\..\addons\ofxAudioDecoder\libs\src\audiodecoderbase.cpp" />
@@ -348,6 +349,7 @@
     <ClInclude Include="src\ParticleSystem\ParticleRenderer.h" />
     <ClInclude Include="src\ParticleSystem\SimulationAnimator.h" />
     <ClInclude Include="src\RealtimeAudioShowElement.h" />
+    <ClInclude Include="src\RealtimeParticlesShowElement.h" />
     <ClInclude Include="src\ShowElement.h" />
     <ClInclude Include="..\..\addons\ofxAudioDecoder\src\ofxAudioDecoder.h" />
     <ClInclude Include="..\..\addons\ofxAudioDecoder\libs\include\apple\CADebugMacros.h" />

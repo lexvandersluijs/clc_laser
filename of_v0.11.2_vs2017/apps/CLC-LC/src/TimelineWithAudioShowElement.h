@@ -24,11 +24,6 @@ protected:
 	ofxLaser::Graphic graphic;
 	ofxOnsetDetection onsetD;
 
-	ofParameter<float> Mask1L;
-	ofParameter<float> Mask1R;
-	ofParameter<float> Mask2L;
-	ofParameter<float> Mask2R;
-
 	void bangFired(ofxTLBangEventArgs& args);
 
 	//vector<GraphicElement*> lines;

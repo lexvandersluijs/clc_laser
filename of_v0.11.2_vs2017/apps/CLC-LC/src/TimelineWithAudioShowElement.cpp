@@ -20,10 +20,8 @@ void TimelineWithAudioShowElement::setup()
 	onsetD.setup(OFX_ODS_ODF_RCOMPLEX, 2, 256);
 
 	// ----------- register parameters -----------------
-	addParameter(Mask1L.set("Mask 1 L", 50, 0, 800));
-	addParameter(Mask1R.set("Mask 1 R", 250, 0, 800));
-	addParameter(Mask2L.set("Mask 2 L", 350, 0, 800));
-	addParameter(Mask2R.set("Mask 2 R", 650, 0, 800));
+	//addParameter(Mask1L.set("Mask 1 L", 50, 0, 800));
+
 
 	// ---------------- set up the timeline ----------------
 	ofxTimeline::removeCocoaMenusFromGlut("AllTracksExample");
@@ -165,20 +163,20 @@ void TimelineWithAudioShowElement::drawLaserGraphic(ofxLaser::Manager& laserMana
 
 	graphic.clear();
 
-	bool clip = true;
 	graphicSet->drawToGraphic(graphic);
 
-	if (clip)
-	{
-		ofPath clippingPath1, clippingPath2;
-		clippingPath1.rectangle(Mask1L, 0, Mask1R - Mask1L, 800);
-		clippingPath2.rectangle(Mask2L, 0, Mask2R - Mask2L, 800);
-		vector<ofPath> clippingPaths;
-		clippingPaths.push_back(clippingPath1);
-		clippingPaths.push_back(clippingPath2);
+	//bool clip = true;
+	//if (clip)
+	//{
+	//	ofPath clippingPath1, clippingPath2;
+	//	clippingPath1.rectangle(Mask1L, 0, Mask1R - Mask1L, 800);
+	//	clippingPath2.rectangle(Mask2L, 0, Mask2R - Mask2L, 800);
+	//	vector<ofPath> clippingPaths;
+	//	clippingPaths.push_back(clippingPath1);
+	//	clippingPaths.push_back(clippingPath2);
 
-		graphic.intersectPaths(clippingPaths);
-	}
+	//	graphic.intersectPaths(clippingPaths);
+	//}
 	laserManager.drawLaserGraphic(graphic, 1, renderProfileName);
 
 	laserManager.endDraw();
