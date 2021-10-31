@@ -33,9 +33,29 @@ void RealtimeAudioShowElement::setup()
 	// 256 samples per buffer
 	// 4 num buffers (latency)
 	//soundStream.printDeviceList();
-	PrintDirectShowAudioDeviceList(*soundStream.getSoundStream());
+	//PrintDirectShowAudioDeviceList(*soundStream.getSoundStream());
 	
 	addParameter(inputDeviceName.set("Input device name", inputDeviceNameFromConstructor));
+
+	//std::vector<ofSoundDevice> matchingDevices = soundStream.getMatchingDevices(inputDeviceName, 2, 0, ofSoundDevice::Api::MS_DS);
+	auto devices = soundStream.getSoundStream()->getDeviceList(ofSoundDevice::MS_DS);
+
+	bool inputDeviceFound = false;
+	for (int i = 0; i < devices.size(); i++)
+	{
+		cout << "input device[" << i << "]: " << devices << endl;
+		inputDeviceNamesAvailable.push_back(devices[i].name);
+		if (devices[i].name == inputDeviceName.get())
+			cout << "Input device named \"" << inputDeviceName << "\" found on the system" << endl;
+	}
+	addParameter(startPlayingOnActivation.set("Start playing on activation", false));
+	addParameter(reactToAudio.set("React to audio", true));
+
+	addParameter(color1.set("Color 1", 0, 0, ofColor::aliceBlue));
+	addParameter(color2.set("Color 2", 0, 0, ofColor::aliceBlue));
+	addParameter(color3.set("Color 3", 0, 0, ofColor::aliceBlue));
+	addParameter(color4.set("Color 4", 0, 0, ofColor::aliceBlue));
+	addParameter(color5.set("Color 5", 0, 0, ofColor::aliceBlue));
 
 	bd.enableBeatDetect();
 }
@@ -60,30 +80,39 @@ void RealtimeAudioShowElement::update()
 {
 	if (audioReceived)
 	{
-		// compute FFT and such
-		//audioProcessor.calc();
-		bd.updateFFT();
+		if (reactToAudio.get())
+		{
+			// compute FFT and such
+			//audioProcessor.calc();
+			bd.updateFFT();
 
-		bool isOnsetting = onsetD.isOnsetting(bd.getMagnitude());
-		if(isOnsetting)
-			cout << "isOnSetting = " << isOnsetting << endl;
+			//bool isOnsetting = onsetD.isOnsetting(bd.getMagnitude());
+			//if (isOnsetting)
+			//	cout << "isOnSetting = " << isOnsetting << endl;
 
-		if (bd.isKick())
-		{
-			cout << "RealtimeAudioShowElement bd.isKick() bd.magnitude[10] = " << bd.magnitude[10] << endl;
-			//graphicSet->pulse(0);
-			//float newRadius = 100 * (1.0f + 100 * audioProcessor.getAvgPower());
-			//float newRadius = 100 * (1.0f + bd.magnitude[10]);
-			//(dynamic_cast<SuperEllipseSet*>(graphicSet))->setParams(4, newRadius, newRadius);
-			graphicSet->pulse(0);
-		}
-		if (bd.isSnare())
-		{
-			graphicSet->pulse(1);
-		}
-		if (bd.isHat())
-		{
-			graphicSet->pulse(2);
+			if (bd.isKick())
+			{
+				//cout << "RealtimeAudioShowElement bd.isKick() bd.magnitude[10] = " << bd.magnitude[10] << endl;
+				//graphicSet->pulse(0);
+				//float newRadius = 100 * (1.0f + 100 * audioProcessor.getAvgPower());
+				//float newRadius = 100 * (1.0f + bd.magnitude[10]);
+				//(dynamic_cast<SuperEllipseSet*>(graphicSet))->setParams(4, newRadius, newRadius);
+				for (int i = 0; i < graphicSet->getLineCount(); i++)
+					if (i % 3 == 0)
+						graphicSet->pulse(i);
+			}
+			if (bd.isSnare())
+			{
+				for (int i = 0; i < graphicSet->getLineCount(); i++)
+					if (i % 2 == 0)
+						graphicSet->pulse(i);
+			}
+			if (bd.isHat())
+			{
+				for (int i = 0; i < graphicSet->getLineCount(); i++)
+					if (i % 3 == 2)
+						graphicSet->pulse(i);
+			}
 		}
 		graphicSet->update();
 	}
@@ -94,6 +123,21 @@ void RealtimeAudioShowElement::draw()
 	float x = 0;
 	float spacing = 8;
 	UI::startWindow("Settings - " + name, ImVec2(x, 804), ImVec2(ofGetWindowWidth() / 2, 0));
+
+	if (ImGui::BeginCombo("##Audio input devices", inputDeviceName.get().c_str())) { // The second parameter is the label previewed before opening the combo.
+
+		for (const string input : inputDeviceNamesAvailable) {
+
+			if (ImGui::Selectable(input.c_str(), inputDeviceName.get() == input)) {
+				//get the preset and make a copy of it
+				// uses operator overloading to create a clone
+				//laser->scannerSettings = *presetManager.getPreset(presetName);
+				inputDeviceName = input;
+			}
+		}
+
+		ImGui::EndCombo();
+	}
 
 	ofxLaser::UI::addParameterGroup(parameters);
 
@@ -120,7 +164,9 @@ void RealtimeAudioShowElement::setActive(bool a)
 	ShowElement::setActive(a);
 
 	// automatically turn on the input (if possible.. input source already set correctly in UI) when activated?
-	// .. TBD
+
+	if (startPlayingOnActivation.get() && a == true)
+		StartAudioInput();
 
 	if (a == false)
 		StopAudioInput();
@@ -138,6 +184,8 @@ void RealtimeAudioShowElement::StartAudioInput()
 	if (useNewDeviceSelection)
 	{
 		std::vector<ofSoundDevice> matchingDevices = soundStream.getMatchingDevices(inputDeviceName, 2, 0, ofSoundDevice::Api::MS_DS);
+
+		cout << "Selected input sound device: " << matchingDevices[0] << endl;
 
 		ofSoundStreamSettings settings;
 		settings.setInDevice(matchingDevices[0]);

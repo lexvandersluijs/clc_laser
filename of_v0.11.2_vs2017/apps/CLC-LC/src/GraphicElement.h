@@ -90,7 +90,7 @@ public:
 
 	virtual void drawToGraphic(ofxLaser::Graphic& graphic);
 
-	//vector<GraphicElement*>& getLines() { return lines; }
+	int getLineCount() { return lines.size(); }
 
 protected:
 	vector<GraphicElement*> lines;

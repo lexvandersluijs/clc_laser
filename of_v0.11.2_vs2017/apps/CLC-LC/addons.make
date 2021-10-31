@@ -6,6 +6,7 @@ ofxPoco
 ofxLaser
 ofxMSATimer
 ofxOnsetDetection
+ofxOsc
 ofxRange
 ofxTextInputField
 ofxTimecode

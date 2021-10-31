@@ -29,6 +29,16 @@ protected:
 	string inputDeviceNameFromConstructor;
 	ofParameter<string> inputDeviceName;
 
+	vector<string> inputDeviceNamesAvailable;
+
+	ofParameter<bool> startPlayingOnActivation;
+	ofParameter<bool> reactToAudio;
+	ofParameter<ofColor> color1;
+	ofParameter<ofColor> color2;
+	ofParameter<ofColor> color3;
+	ofParameter<ofColor> color4;
+	ofParameter<ofColor> color5;
+
 	GraphicSet* graphicSet;
 	ofxLaser::Graphic graphic;
 	ofSoundStream soundStream;

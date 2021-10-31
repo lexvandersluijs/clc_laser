@@ -56,8 +56,8 @@ ofPolyline& VerticalLine::getPolyline()
 {
 	polyline.clear();
 
-	polyline.addVertex(xCoord + pulseFactor * 20, -1500); // extend from boundaries of 'screen', these are at 0 and 800
-	polyline.addVertex(xCoord + pulseFactor * 20, 2200);
+	polyline.addVertex(xCoord + pulseFactor * 40, -1500); // extend from boundaries of 'screen', these are at 0 and 800
+	polyline.addVertex(xCoord + pulseFactor * 40, 2200);
 
 	return polyline;
 }
@@ -72,8 +72,8 @@ ofPolyline& HorizontalLine::getPolyline()
 {
 	polyline.clear();
 
-	polyline.addVertex(0,   yCoord - pulseFactor * 20);
-	polyline.addVertex(800, yCoord - pulseFactor * 20);
+	polyline.addVertex(0,   yCoord - pulseFactor * 40);
+	polyline.addVertex(800, yCoord - pulseFactor * 40);
 
 	return polyline;
 }
@@ -94,8 +94,8 @@ ofPolyline& SuperEllipse::getPolyline()
 
 	int NUM_STEPS = 32;
 
-	float a = param_a * (1 + pulseFactor);
-	float b = param_b * (1 + pulseFactor);
+	float a = param_a * (1 + pulseFactor * 0.5); // max value for pulsefactor is 1, so shape can become 50% larger
+	float b = param_b * (1 + pulseFactor * 0.5);
 	for (int i = 0; i < NUM_STEPS; i++)
 	{
 		float t = i / (float)(NUM_STEPS - 1);
@@ -103,7 +103,7 @@ ofPolyline& SuperEllipse::getPolyline()
 		float cost = cos(tp);
 		float sint = sin(tp);
 		float x = pow(abs(cost), 2 / param_n) * a * sgn(cost);
-		float y = pow(abs(sint), 2 / param_n) * b * sgn(sint);
+		float y = pow(abs(sint), 2 / param_n) * b * sgn(sint) * 0.8f; // hack to scale down vertically: looks more like TV tube
 
 		polyline.addVertex(x, y, 0);
 	}
@@ -125,9 +125,17 @@ void GraphicSet::drawToGraphic(ofxLaser::Graphic& graphic)
 
 SuperEllipseSet::SuperEllipseSet(float n, float a, float b)
 {
-	lines.push_back(new SuperEllipse(n, a, b, ofVec2f(100, 100), ofColor::red));
-	lines.push_back(new SuperEllipse(n, a, b, ofVec2f(150, 500), ofColor::green));
-	lines.push_back(new SuperEllipse(n, a, b, ofVec2f(500, 400), ofColor::orange));
+	lines.push_back(new SuperEllipse(n, a * 0.9f, b * 0.9f,  ofVec2f(120, -100), ofColor::red));
+	lines.push_back(new SuperEllipse(n, a,        b,         ofVec2f(150, -210), ofColor::green));
+	lines.push_back(new SuperEllipse(n, a * 1.1f, b * 1.1f,  ofVec2f(350, -290), ofColor::orange));
+
+	lines.push_back(new SuperEllipse(n, a * 0.9f, b * 0.9f,  ofVec2f(120, 100), ofColor::red));
+	lines.push_back(new SuperEllipse(n, a,        b,          ofVec2f(150, 500), ofColor::green));
+	lines.push_back(new SuperEllipse(n, a * 1.1f, b * 1.1f,   ofVec2f(350, 400), ofColor::orange));
+
+	lines.push_back(new SuperEllipse(n, a * 1.1f,  b * 1.1f,  ofVec2f(540, 150), ofColor::magenta));
+	lines.push_back(new SuperEllipse(n, a * 0.85f, b * 0.85f, ofVec2f(300, 650), ofColor::orange));
+	lines.push_back(new SuperEllipse(n, a * 1.1f,  b * 1.1f,  ofVec2f(500, 400), ofColor::green));
 
 	startTime = ofGetElapsedTimef();
 }
@@ -147,7 +155,7 @@ void SuperEllipseSet::drawToGraphic(ofxLaser::Graphic& graphic)
 
 	float distance = timeElapsed * 50.f; // 50 pixels / second, 16 seconds to cover 800 px
 
-	float maxDistance = 800;
+	float maxDistance = 1200;
 
 	distance = fmod(distance, maxDistance);
 

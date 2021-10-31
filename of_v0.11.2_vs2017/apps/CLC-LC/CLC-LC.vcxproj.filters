@@ -7,13 +7,40 @@
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Audio.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BeatDetect.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fft.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GraphicElement.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\ofApp.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\RealtimeAudioShowElement.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RealTimeParticlesShowElement.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="src\ShowElement.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SmoothValue.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Threshold.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TimelineWithAudioShowElement.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\addons\ofxAudioDecoder\src\ofxAudioDecoder.cpp">
@@ -250,6 +277,42 @@
     <ClCompile Include="..\..\addons\ofxOnsetDetection\src\OnsetsDS\onsetsds.c">
       <Filter>addons\ofxOnsetDetection\src\OnsetsDS</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\addons\ofxOsc\src\ofxOscBundle.cpp">
+      <Filter>addons\ofxOsc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\addons\ofxOsc\src\ofxOscMessage.cpp">
+      <Filter>addons\ofxOsc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\addons\ofxOsc\src\ofxOscParameterSync.cpp">
+      <Filter>addons\ofxOsc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\addons\ofxOsc\src\ofxOscReceiver.cpp">
+      <Filter>addons\ofxOsc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\addons\ofxOsc\src\ofxOscSender.cpp">
+      <Filter>addons\ofxOsc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\addons\ofxOsc\libs\oscpack\src\ip\IpEndpointName.cpp">
+      <Filter>addons\ofxOsc\libs\oscpack\src\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\addons\ofxOsc\libs\oscpack\src\ip\win32\NetworkingUtils.cpp">
+      <Filter>addons\ofxOsc\libs\oscpack\src\ip\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\addons\ofxOsc\libs\oscpack\src\ip\win32\UdpSocket.cpp">
+      <Filter>addons\ofxOsc\libs\oscpack\src\ip\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\addons\ofxOsc\libs\oscpack\src\osc\OscOutboundPacketStream.cpp">
+      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPrintReceivedElements.cpp">
+      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\addons\ofxOsc\libs\oscpack\src\osc\OscReceivedElements.cpp">
+      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.cpp">
+      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\addons\ofxTextInputField\src\ofxTextInputField.cpp">
       <Filter>addons\ofxTextInputField\src</Filter>
     </ClCompile>
@@ -403,37 +466,13 @@
     <ClCompile Include="..\..\addons\ofxVectorGraphics\libs\CreEPS.cpp">
       <Filter>addons\ofxVectorGraphics\libs</Filter>
     </ClCompile>
-    <ClCompile Include="src\TimelineWithAudioShowElement.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\RealtimeAudioShowElement.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GraphicElement.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Audio.cpp">
-      <Filter>src\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Threshold.cpp">
-      <Filter>src\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SmoothValue.cpp">
-      <Filter>src\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="src\fft.cpp">
-      <Filter>src\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BeatDetect.cpp">
-      <Filter>src\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="src\RealTimeParticlesShowElement.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
       <UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ParticleSystem">
+      <UniqueIdentifier>{698E4A37-CF30-C706-B3C2-D28C}</UniqueIdentifier>
     </Filter>
     <Filter Include="addons">
       <UniqueIdentifier>{71834F65-F3A9-211E-73B8-DC85}</UniqueIdentifier>
@@ -735,6 +774,30 @@
     <Filter Include="addons\ofxOnsetDetection\src\OnsetsDS">
       <UniqueIdentifier>{414C8BD4-C647-53C4-BAD7-BA06}</UniqueIdentifier>
     </Filter>
+    <Filter Include="addons\ofxOsc">
+      <UniqueIdentifier>{D91DCA33-6E5D-4481-2AEC-9FBB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxOsc\src">
+      <UniqueIdentifier>{B9DD339A-D93D-92A1-0A2F-4B41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxOsc\libs">
+      <UniqueIdentifier>{99ECA1D9-873F-4622-8FC0-FC7B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxOsc\libs\oscpack">
+      <UniqueIdentifier>{D3A98534-1602-4FEF-57A6-6593}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxOsc\libs\oscpack\src">
+      <UniqueIdentifier>{BFB5BB47-98C8-BBCB-3066-1046}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxOsc\libs\oscpack\src\ip">
+      <UniqueIdentifier>{5A029128-EB41-95C5-CBC0-CDED}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxOsc\libs\oscpack\src\ip\win32">
+      <UniqueIdentifier>{79DFDFE2-400B-8654-3675-01A3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxOsc\libs\oscpack\src\osc">
+      <UniqueIdentifier>{EDACB89C-9768-9551-4D41-B590}</UniqueIdentifier>
+    </Filter>
     <Filter Include="addons\ofxRange">
       <UniqueIdentifier>{C5CF358F-F6D6-0F61-5433-25F1}</UniqueIdentifier>
     </Filter>
@@ -810,21 +873,69 @@
     <Filter Include="addons\ofxVectorGraphics\libs">
       <UniqueIdentifier>{B341F552-35C4-7EB6-B3C9-9D96}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\ParticleSystem">
-      <UniqueIdentifier>{9e808a9f-7e1f-491f-868d-3a6bf29fafcd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Audio">
-      <UniqueIdentifier>{d07a9202-6406-4457-a026-6e217f8c95d3}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Audio.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BeatDetect.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fft.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GraphicElement.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\ofApp.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\ParticleSystem\FluidSimulationAnimator.h">
+      <Filter>src\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleSystem\ForceField.h">
+      <Filter>src\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleSystem\Particle.h">
+      <Filter>src\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleSystem\ParticleAnimator.h">
+      <Filter>src\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleSystem\ParticleEffect.h">
+      <Filter>src\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleSystem\ParticleGenerator.h">
+      <Filter>src\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleSystem\ParticleManager.h">
+      <Filter>src\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleSystem\ParticleRenderer.h">
+      <Filter>src\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleSystem\SimulationAnimator.h">
+      <Filter>src\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RealtimeAudioShowElement.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RealtimeParticlesShowElement.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\ShowElement.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SmoothValue.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Threshold.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TimelineWithAudioShowElement.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\addons\ofxAudioDecoder\src\ofxAudioDecoder.h">
@@ -2168,6 +2279,66 @@
     <ClInclude Include="..\..\addons\ofxOnsetDetection\src\OnsetsDS\onsetsds.h">
       <Filter>addons\ofxOnsetDetection\src\OnsetsDS</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\addons\ofxOsc\src\ofxOsc.h">
+      <Filter>addons\ofxOsc\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\addons\ofxOsc\src\ofxOscArg.h">
+      <Filter>addons\ofxOsc\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\addons\ofxOsc\src\ofxOscBundle.h">
+      <Filter>addons\ofxOsc\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\addons\ofxOsc\src\ofxOscMessage.h">
+      <Filter>addons\ofxOsc\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\addons\ofxOsc\src\ofxOscParameterSync.h">
+      <Filter>addons\ofxOsc\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\addons\ofxOsc\src\ofxOscReceiver.h">
+      <Filter>addons\ofxOsc\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\addons\ofxOsc\src\ofxOscSender.h">
+      <Filter>addons\ofxOsc\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\addons\ofxOsc\libs\oscpack\src\ip\IpEndpointName.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\addons\ofxOsc\libs\oscpack\src\ip\NetworkingUtils.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\addons\ofxOsc\libs\oscpack\src\ip\PacketListener.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\addons\ofxOsc\libs\oscpack\src\ip\TimerListener.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\addons\ofxOsc\libs\oscpack\src\ip\UdpSocket.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\addons\ofxOsc\libs\oscpack\src\osc\MessageMappingOscPacketListener.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\addons\ofxOsc\libs\oscpack\src\osc\OscException.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\addons\ofxOsc\libs\oscpack\src\osc\OscHostEndianness.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\addons\ofxOsc\libs\oscpack\src\osc\OscOutboundPacketStream.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPacketListener.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPrintReceivedElements.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\addons\ofxOsc\libs\oscpack\src\osc\OscReceivedElements.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\addons\ofxRange\src\ofRange.h">
       <Filter>addons\ofxRange\src</Filter>
     </ClInclude>
@@ -2344,57 +2515,6 @@
     </ClInclude>
     <ClInclude Include="..\..\addons\ofxVectorGraphics\libs\CreEPS_Types.hpp">
       <Filter>addons\ofxVectorGraphics\libs</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ParticleSystem\FluidSimulationAnimator.h">
-      <Filter>src\ParticleSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ParticleSystem\ForceField.h">
-      <Filter>src\ParticleSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ParticleSystem\ParticleAnimator.h">
-      <Filter>src\ParticleSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ParticleSystem\Particle.h">
-      <Filter>src\ParticleSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ParticleSystem\ParticleGenerator.h">
-      <Filter>src\ParticleSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ParticleSystem\ParticleManager.h">
-      <Filter>src\ParticleSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ParticleSystem\ParticleRenderer.h">
-      <Filter>src\ParticleSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ParticleSystem\SimulationAnimator.h">
-      <Filter>src\ParticleSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GraphicElement.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\TimelineWithAudioShowElement.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\RealtimeAudioShowElement.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\SmoothValue.h">
-      <Filter>src\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Threshold.h">
-      <Filter>src\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Audio.h">
-      <Filter>src\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="src\fft.h">
-      <Filter>src\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BeatDetect.h">
-      <Filter>src\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="src\RealtimeParticlesShowElement.h">
-      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
