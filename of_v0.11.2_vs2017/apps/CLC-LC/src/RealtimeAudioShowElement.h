@@ -24,6 +24,8 @@ public:
 	void StartAudioInput();
 	void StopAudioInput();
 
+	virtual void saveParameters();
+
 protected:
 	//ofBaseApp* app;
 	string inputDeviceNameFromConstructor;
@@ -35,18 +37,13 @@ protected:
 	ofParameter<bool> reactToAudio;
 	ofParameter<float> velocityFactor;
 	ofParameter<float> pulseResponseInPixels;
-	ofParameter<ofColor> color1;
-	ofParameter<ofColor> color2;
-	ofParameter<ofColor> color3;
-	ofParameter<ofColor> color4;
-	ofParameter<ofColor> color5;
 
 	GraphicSet* graphicSet;
 	ofxLaser::Graphic graphic;
 	ofSoundStream soundStream;
 
 	bool audioReceived = false;
-	Audio audioProcessor;
+	//Audio audioProcessor;
 	int fft_size = 512;
 	beatDetect bd;
 	ofxOnsetDetection onsetD;

@@ -18,7 +18,7 @@ public:
 	void setRotation(float r) { rotation = r; }
 	ofVec2f getCenter() { return center; }
 	float getRotation() { return rotation; }
-
+	void setColor(ofColor c) { color = c; }
 	void drawToGraphic(ofxLaser::Graphic& graphic);
 
 	void setPulseResponseInPixels(float pulseResponse) { pulseResponseInPixels = pulseResponse; }
@@ -100,8 +100,14 @@ public:
 		for (int i = 0; i < lines.size(); i++)
 			lines[i]->setPulseResponseInPixels(pixels);
 	}
+	virtual ofParameterGroup& getParameters()
+	{
+		return allParameters;
+	}
 
 protected:
+	ofParameterGroup allParameters;
+
 	vector<GraphicElement*> lines;
 	float velocityFactor = 1.0f;
 };
@@ -116,12 +122,14 @@ public:
 	virtual void drawToGraphic(ofxLaser::Graphic& graphic);
 	virtual void drawUI();
 
+
 protected:
-	float startTime;
+	//float startTime;
 
 	ofParameter<float> startX[NR_OF_ELLIPSES];
 	ofParameter<float> motionStartTime[NR_OF_ELLIPSES];
 	ofParameter<float> motionDuration[NR_OF_ELLIPSES];
+	ofParameter<ofColor> color[NR_OF_ELLIPSES];
 };
 
 class ConcentricCircleSet : public GraphicSet
@@ -133,21 +141,26 @@ protected:
 
 };
 
+const int NR_OF_VER_LINES = 4;
 class LineSet : public GraphicSet
 {
 public:
 	LineSet();
 	virtual void drawToGraphic(ofxLaser::Graphic& graphic);
+	virtual void drawUI();
 
 protected:
-
+	ofParameter<ofColor> color[NR_OF_VER_LINES];
 };
 
+const int NR_OF_HOR_LINES = 3;
 class HorizontalLineSet : public GraphicSet
 {
 public:
 	HorizontalLineSet();
+	virtual void drawToGraphic(ofxLaser::Graphic& graphic);
+	virtual void drawUI();
 
 protected:
-
+	ofParameter<ofColor> color[NR_OF_HOR_LINES];
 };

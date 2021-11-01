@@ -14,7 +14,6 @@ ShowElement::ShowElement(string n)
 
 ShowElement::~ShowElement()
 {
-	saveParameters();
 }
 
 void ShowElement::loadParameterJson()
@@ -28,9 +27,10 @@ void ShowElement::loadParameterJson()
 
 }
 
-void ShowElement::addParameter(ofAbstractParameter& param)
+void ShowElement::addParameter(ofAbstractParameter& param, bool onlyParseSettingsFromJson)
 {
-	parameters.add(param);
+	if(!onlyParseSettingsFromJson)
+		parameters.add(param);
 
 	if (!parameterJson.empty()) {
 		if (parameterJson.contains("group")) 
@@ -105,20 +105,20 @@ void SvgShowElement::setup()
 	currentSVG = 0;
 
 
-	addParameter(currentSVG.set("Current SVG", 0, 0, laserGraphics.size() - 1));
-	addParameter(currentSVGFilename.set("Filename", currentSVGFilename.get()));
+	addParameter(currentSVG.set("Current SVG", 0, 0, laserGraphics.size() - 1), false);
+	addParameter(currentSVGFilename.set("Filename", currentSVGFilename.get()), false);
 
-	addParameter(drawTwoSided.set("Draw two-sided", false));
-	addParameter(otherSideSVG.set("Other side SVG", 0, 0, laserGraphics.size() - 1));
-	addParameter(otherSideSVGFilename.set("Other side filename", otherSideSVGFilename.get()));
+	addParameter(drawTwoSided.set("Draw two-sided", false), false);
+	addParameter(otherSideSVG.set("Other side SVG", 0, 0, laserGraphics.size() - 1), false);
+	addParameter(otherSideSVGFilename.set("Other side filename", otherSideSVGFilename.get()), false);
 
-	addParameter(scale.set("SVG scale", 1.0, 0.1, 6));
-	addParameter(offsetX.set("Offset X", 400, 0, 800));
-	addParameter(offsetY.set("Offset Y", 400, 0, 800));
-	addParameter(rotate3D.set("Rotate 3D", true));
-	addParameter(rotate360.set("Rotate 360", false));
-	addParameter(renderProfileLabel.set("Render Profile name", ""));
-	addParameter(renderProfileIndex.set("Render Profile", 1, 0, 2));
+	addParameter(scale.set("SVG scale", 1.0, 0.1, 6), false);
+	addParameter(offsetX.set("Offset X", 400, 0, 800), false);
+	addParameter(offsetY.set("Offset Y", 400, 0, 800), false);
+	addParameter(rotate3D.set("Rotate 3D", true), false);
+	addParameter(rotate360.set("Rotate 360", false), false);
+	addParameter(renderProfileLabel.set("Render Profile name", ""), false);
+	addParameter(renderProfileIndex.set("Render Profile", 1, 0, 2), false);
 
 }
 

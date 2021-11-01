@@ -32,8 +32,8 @@ public:
 	virtual void drawLaserGraphic(ofxLaser::Manager& laserManager, string renderProfileName) = 0;
 
 	void loadParameterJson();
-	void addParameter(ofAbstractParameter& param);
-	void saveParameters();
+	void addParameter(ofAbstractParameter& param, bool onlyParseSettingsFromJson);
+	virtual void saveParameters();
 
 	bool selected = false;
 

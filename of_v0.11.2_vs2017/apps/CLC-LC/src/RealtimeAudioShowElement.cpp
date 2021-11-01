@@ -35,7 +35,13 @@ void RealtimeAudioShowElement::setup()
 	//soundStream.printDeviceList();
 	//PrintDirectShowAudioDeviceList(*soundStream.getSoundStream());
 	
-	addParameter(inputDeviceName.set("Input device name", inputDeviceNameFromConstructor));
+	addParameter(inputDeviceName.set("Input device name", inputDeviceNameFromConstructor), false);
+
+	ofParameterGroup& graphicSetParameters = graphicSet->getParameters();
+	for (int i = 0; i < graphicSetParameters.size(); i++)
+	{
+		addParameter(graphicSetParameters[i], true);
+	}
 
 	//std::vector<ofSoundDevice> matchingDevices = soundStream.getMatchingDevices(inputDeviceName, 2, 0, ofSoundDevice::Api::MS_DS);
 	auto devices = soundStream.getSoundStream()->getDeviceList(ofSoundDevice::MS_DS);
@@ -48,15 +54,10 @@ void RealtimeAudioShowElement::setup()
 		if (devices[i].name == inputDeviceName.get())
 			cout << "Input device named \"" << inputDeviceName << "\" found on the system" << endl;
 	}
-	addParameter(startPlayingOnActivation.set("Start playing on activation", false));
-	addParameter(reactToAudio.set("React to audio", true));
-	addParameter(velocityFactor.set("Velocity factor", 1.0f, 0, 5.0f));
-	addParameter(pulseResponseInPixels.set("Pulse response (px)", 20.0f, 0, 100.0f));
-	addParameter(color1.set("Color 1", 0, 0, ofColor::aliceBlue));
-	addParameter(color2.set("Color 2", 0, 0, ofColor::aliceBlue));
-	addParameter(color3.set("Color 3", 0, 0, ofColor::aliceBlue));
-	addParameter(color4.set("Color 4", 0, 0, ofColor::aliceBlue));
-	addParameter(color5.set("Color 5", 0, 0, ofColor::aliceBlue));
+	addParameter(startPlayingOnActivation.set("Start playing on activation", false), false);
+	addParameter(reactToAudio.set("React to audio", true), false);
+	addParameter(velocityFactor.set("Velocity factor", 1.0f, 0, 5.0f), false);
+	addParameter(pulseResponseInPixels.set("Pulse response (px)", 20.0f, 0, 100.0f), false);
 
 	bd.enableBeatDetect();
 }
@@ -192,18 +193,20 @@ void RealtimeAudioShowElement::StartAudioInput()
 	if (useNewDeviceSelection)
 	{
 		std::vector<ofSoundDevice> matchingDevices = soundStream.getMatchingDevices(inputDeviceName, 2, 0, ofSoundDevice::Api::MS_DS);
+		if (matchingDevices.size() > 0)
+		{
+			cout << "Selected input sound device: " << matchingDevices[0] << endl;
 
-		cout << "Selected input sound device: " << matchingDevices[0] << endl;
-
-		ofSoundStreamSettings settings;
-		settings.setInDevice(matchingDevices[0]);
-		settings.numBuffers = 1;
-		settings.setInListener(this);
-		settings.sampleRate = 44100;
-		settings.numOutputChannels = 0;
-		settings.numInputChannels = 2;
-		settings.bufferSize = bufferSize;
-		bool result = soundStream.setup(settings);
+			ofSoundStreamSettings settings;
+			settings.setInDevice(matchingDevices[0]);
+			settings.numBuffers = 1;
+			settings.setInListener(this);
+			settings.sampleRate = 44100;
+			settings.numOutputChannels = 0;
+			settings.numInputChannels = 2;
+			settings.bufferSize = bufferSize;
+			bool result = soundStream.setup(settings);
+		}
 	}
 	else
 	{
@@ -278,4 +281,11 @@ void RealtimeAudioShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager,
 	laserManager.endDraw();
 }
 
-
+void RealtimeAudioShowElement::saveParameters()
+{
+	ofJson json;
+	ofSerialize(json, parameters);
+	ofSerialize(json, graphicSet->getParameters());
+	
+	bool savesuccess = ofSavePrettyJson("showElements/" + name + ".json", json);
+}

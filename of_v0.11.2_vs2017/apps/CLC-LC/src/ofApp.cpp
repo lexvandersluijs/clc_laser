@@ -21,6 +21,7 @@ ofApp::~ofApp()
 {
 	for (int i = 0; i < showElements.size(); i++)
 	{
+		showElements[i]->saveParameters();
 		delete showElements[i];
 	}
 	showElements.clear();
