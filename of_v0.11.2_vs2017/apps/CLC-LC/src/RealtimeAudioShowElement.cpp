@@ -125,7 +125,7 @@ void RealtimeAudioShowElement::draw()
 {
 	float x = 0;
 	float spacing = 8;
-	UI::startWindow("Settings - " + name, ImVec2(x, 804), ImVec2(ofGetWindowWidth() / 2, 0));
+	UI::startWindow("Settings - " + name, ImVec2(x, 804), ImVec2(ofGetWindowWidth() * 0.8f, 0));
 
 	if (ImGui::BeginCombo("##Audio input devices", inputDeviceName.get().c_str())) { // The second parameter is the label previewed before opening the combo.
 
@@ -141,6 +141,8 @@ void RealtimeAudioShowElement::draw()
 
 		ImGui::EndCombo();
 	}
+
+	graphicSet->drawUI();
 
 	ofxLaser::UI::addParameterGroup(parameters);
 

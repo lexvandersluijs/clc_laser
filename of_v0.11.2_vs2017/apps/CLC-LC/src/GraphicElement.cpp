@@ -141,6 +141,20 @@ SuperEllipseSet::SuperEllipseSet(float n, float a, float b)
 	startTime = ofGetElapsedTimef();
 }
 
+void SuperEllipseSet::drawUI()
+{
+	for (int i = 0; i < NR_OF_ELLIPSES; i++)
+	{
+		ImGui::PushItemWidth(ImGui::GetWindowWidth() / 4.f);
+		ofxLaser::UI::addParameter(startX[i]);
+		ImGui::SameLine();
+		ofxLaser::UI::addParameter(motionStartTime[i]);
+		ImGui::SameLine();
+		ofxLaser::UI::addParameter(motionDuration[i]);
+		ImGui::PopItemWidth();
+	}
+}
+
 void SuperEllipseSet::setParams(float n, float a, float b)
 {
 	for (int i = 0; i < lines.size(); i++)

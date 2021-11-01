@@ -64,7 +64,7 @@ public:
 			if(particleIndex != -1)
 			{
 				// initialize particle in correct spot
-				// right now..  simply in the vicinity of the origig
+				// right now..  simply in the vicinity of the origin
 				Particle* particleArray = _particleManager->GetParticlesArray();
 				particleArray[particleIndex].Position = pos + ofVec2f(RandomCentered(5.f), RandomCentered(5.f));
 				particleArray[particleIndex].Speed = direction; //ofVec2f::zero();

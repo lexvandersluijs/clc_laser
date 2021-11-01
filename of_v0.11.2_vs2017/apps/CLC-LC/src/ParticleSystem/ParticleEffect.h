@@ -1,3 +1,10 @@
+#pragma once
+
+#include "ParticleGenerator.h"
+#include "ParticleAnimator.h"
+#include "ParticleRenderer.h"
+#include "FluidSimulationAnimator.h"
+
 using namespace ParticleSystem;
 
 class ParticleEffect

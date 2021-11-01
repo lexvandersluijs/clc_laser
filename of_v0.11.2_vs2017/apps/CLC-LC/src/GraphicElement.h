@@ -90,7 +90,7 @@ public:
 		for (int i = 0; i < lines.size(); i++)
 			lines[i]->update();
 	}
-
+	virtual void drawUI() {}
 	virtual void drawToGraphic(ofxLaser::Graphic& graphic);
 
 	int getLineCount() { return lines.size(); }
@@ -106,16 +106,22 @@ protected:
 	float velocityFactor = 1.0f;
 };
 
+const int NR_OF_ELLIPSES = 8;
+
 class SuperEllipseSet : public GraphicSet
 {
 public:
 	SuperEllipseSet(float n, float a, float b);
 	void setParams(float n, float a, float b);
 	virtual void drawToGraphic(ofxLaser::Graphic& graphic);
+	virtual void drawUI();
 
 protected:
 	float startTime;
 
+	ofParameter<float> startX[NR_OF_ELLIPSES];
+	ofParameter<float> motionStartTime[NR_OF_ELLIPSES];
+	ofParameter<float> motionDuration[NR_OF_ELLIPSES];
 };
 
 class ConcentricCircleSet : public GraphicSet

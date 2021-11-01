@@ -60,7 +60,7 @@ void ofApp::setup(){
 		selectedElementBooleans.push_back(param);
 		laserManager.addCustomParameter(*param);
 	}
-
+	laserManager.setCanvasSize(600, 800);
 	laserManager.renderLater = true;
 }
 
