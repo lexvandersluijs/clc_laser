@@ -354,6 +354,10 @@ float ofGetElapsedTimef(){
 	return std::chrono::duration<double>(of::priv::getClock().getElapsedTime()).count();
 }
 
+double ofGetElapsedTimed() {
+	return std::chrono::duration<double>(of::priv::getClock().getElapsedTime()).count();
+}
+
 //--------------------------------------
 void ofResetElapsedTimeCounter(){
 	of::priv::getClock().resetElapsedTimeCounter();

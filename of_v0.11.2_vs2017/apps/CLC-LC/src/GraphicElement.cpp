@@ -56,8 +56,8 @@ ofPolyline& VerticalLine::getPolyline()
 {
 	polyline.clear();
 
-	polyline.addVertex(xCoord + pulseFactor * 40, -1500); // extend from boundaries of 'screen', these are at 0 and 800
-	polyline.addVertex(xCoord + pulseFactor * 40, 2200);
+	polyline.addVertex(xCoord + pulseFactor * pulseResponseInPixels, -1500); // extend from boundaries of 'screen', these are at 0 and 800
+	polyline.addVertex(xCoord + pulseFactor * pulseResponseInPixels, 2200);
 
 	return polyline;
 }
@@ -72,8 +72,8 @@ ofPolyline& HorizontalLine::getPolyline()
 {
 	polyline.clear();
 
-	polyline.addVertex(0,   yCoord - pulseFactor * 40);
-	polyline.addVertex(800, yCoord - pulseFactor * 40);
+	polyline.addVertex(0,   yCoord - pulseFactor * pulseResponseInPixels);
+	polyline.addVertex(800, yCoord - pulseFactor * pulseResponseInPixels);
 
 	return polyline;
 }
@@ -94,8 +94,9 @@ ofPolyline& SuperEllipse::getPolyline()
 
 	int NUM_STEPS = 32;
 
-	float a = param_a * (1 + pulseFactor * 0.5); // max value for pulsefactor is 1, so shape can become 50% larger
-	float b = param_b * (1 + pulseFactor * 0.5);
+	float a = param_a + pulseResponseInPixels * pulseFactor; // max value for pulsefactor is 1, so shape can become 50% larger
+	float b = param_b + pulseResponseInPixels * pulseFactor;
+
 	for (int i = 0; i < NUM_STEPS; i++)
 	{
 		float t = i / (float)(NUM_STEPS - 1);
@@ -153,7 +154,7 @@ void SuperEllipseSet::drawToGraphic(ofxLaser::Graphic& graphic)
 	// set transform
 	float timeElapsed = ofGetElapsedTimef() - startTime;
 
-	float distance = timeElapsed * 50.f; // 50 pixels / second, 16 seconds to cover 800 px
+	float distance = velocityFactor * timeElapsed * 50.f; // 50 pixels / second, 16 seconds to cover 800 px
 
 	float maxDistance = 1200;
 
@@ -192,12 +193,12 @@ LineSet::LineSet()
 void LineSet::drawToGraphic(ofxLaser::Graphic& graphic)
 {
 	// set transform
-	float timeElapsed = ofGetElapsedTimef() / 2.0f;
-	float timeElapsedModTwoPi = fmod(timeElapsed, TWO_PI);
+	double timeElapsed = ofGetElapsedTimed() * velocityFactor;
+	double timeElapsedModTwoPi = fmod(timeElapsed, TWO_PI*10);
 
 	float maxRotationRadians = 0.8f;
 	//float angle = sin(timeElapsedModTwoPi) * maxRotationRadians;
-	float angle = timeElapsedModTwoPi;
+	float angle = timeElapsedModTwoPi; // 1 radian per second, so 2*pi seconds = ~6.3 seconds for a full rotation
 
 	//float maxDistance = 800;
 	//distance = fmod(distance, maxDistance);
@@ -216,15 +217,20 @@ void LineSet::drawToGraphic(ofxLaser::Graphic& graphic)
 		switch (i)
 		{
 		case 0:
-			finalAngle = -angle;
+			finalAngle = -angle*1.05f;
 			break;
 		case 1:
-			finalAngle = angle + 1; // 1 radian
+			finalAngle = angle*0.8f + 1; // 1 radian
 			break;
 		case 2:
-			finalAngle = angle - 2;
+			finalAngle = angle*0.9f - 2;
+			break;
+
+		case 3:
+			finalAngle = angle*1.1f;
 			break;
 		}
+		finalAngle = fmod(finalAngle, TWO_PI);
 		lines[i]->setRotation(finalAngle);
 		lines[i]->drawToGraphic(graphic);
 	}

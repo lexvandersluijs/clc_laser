@@ -21,9 +21,12 @@ public:
 
 	void drawToGraphic(ofxLaser::Graphic& graphic);
 
+	void setPulseResponseInPixels(float pulseResponse) { pulseResponseInPixels = pulseResponse; }
+
 protected:
 	float pulseTime;
 	float pulseFactor;
+	float pulseResponseInPixels;
 
 	ofPolyline polyline;
 	ofColor color;
@@ -91,9 +94,16 @@ public:
 	virtual void drawToGraphic(ofxLaser::Graphic& graphic);
 
 	int getLineCount() { return lines.size(); }
+	void setVelocityFactor(float factor) { velocityFactor = factor; }
+	void setPulseResponseInPixels(float pixels)
+	{
+		for (int i = 0; i < lines.size(); i++)
+			lines[i]->setPulseResponseInPixels(pixels);
+	}
 
 protected:
 	vector<GraphicElement*> lines;
+	float velocityFactor = 1.0f;
 };
 
 class SuperEllipseSet : public GraphicSet

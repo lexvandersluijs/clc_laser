@@ -33,6 +33,8 @@ protected:
 
 	ofParameter<bool> startPlayingOnActivation;
 	ofParameter<bool> reactToAudio;
+	ofParameter<float> velocityFactor;
+	ofParameter<float> pulseResponseInPixels;
 	ofParameter<ofColor> color1;
 	ofParameter<ofColor> color2;
 	ofParameter<ofColor> color3;

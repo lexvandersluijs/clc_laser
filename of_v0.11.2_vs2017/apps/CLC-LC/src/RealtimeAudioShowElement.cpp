@@ -50,7 +50,8 @@ void RealtimeAudioShowElement::setup()
 	}
 	addParameter(startPlayingOnActivation.set("Start playing on activation", false));
 	addParameter(reactToAudio.set("React to audio", true));
-
+	addParameter(velocityFactor.set("Velocity factor", 1.0f, 0, 5.0f));
+	addParameter(pulseResponseInPixels.set("Pulse response (px)", 20.0f, 0, 100.0f));
 	addParameter(color1.set("Color 1", 0, 0, ofColor::aliceBlue));
 	addParameter(color2.set("Color 2", 0, 0, ofColor::aliceBlue));
 	addParameter(color3.set("Color 3", 0, 0, ofColor::aliceBlue));
@@ -104,7 +105,7 @@ void RealtimeAudioShowElement::update()
 			if (bd.isSnare())
 			{
 				for (int i = 0; i < graphicSet->getLineCount(); i++)
-					if (i % 2 == 0)
+					if (i % 2 == 1)
 						graphicSet->pulse(i);
 			}
 			if (bd.isHat())
@@ -114,6 +115,8 @@ void RealtimeAudioShowElement::update()
 						graphicSet->pulse(i);
 			}
 		}
+		graphicSet->setVelocityFactor(velocityFactor.get());
+		graphicSet->setPulseResponseInPixels(pulseResponseInPixels.get());
 		graphicSet->update();
 	}
 }
@@ -168,8 +171,11 @@ void RealtimeAudioShowElement::setActive(bool a)
 	if (startPlayingOnActivation.get() && a == true)
 		StartAudioInput();
 
-	if (a == false)
-		StopAudioInput();
+	// let's try not turning the input off at the end... reason: when we turn it on, the first data
+	// we get is garbage, causing erratic movement. Could also choose to ignore the first second or so,
+	// but let's try it this way first.
+	//if (a == false)
+	//	StopAudioInput();
 }
 
 void RealtimeAudioShowElement::StartAudioInput()

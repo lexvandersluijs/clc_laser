@@ -27,6 +27,14 @@ void ofResetElapsedTimeCounter();
 /// \returns the floating point elapsed time in seconds.
 float ofGetElapsedTimef();
 
+/// \brief Get the elapsed time in seconds.
+///
+/// This returns the elapsed time since ofResetElapsedTimeCounter() was called.
+/// Usually ofResetElapsedTimeCounter() is called automatically once during
+/// program startup.
+///
+/// \returns the double precision floating point elapsed time in seconds.
+double ofGetElapsedTimed();
 
 /// \brief Get the elapsed time in milliseconds.
 ///
