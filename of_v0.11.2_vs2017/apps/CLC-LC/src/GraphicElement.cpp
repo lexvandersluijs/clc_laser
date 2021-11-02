@@ -239,9 +239,9 @@ LineSet::LineSet()
 	lines.push_back(new VerticalLine(150, ofColor::orange));
 	lines.push_back(new VerticalLine(-220, ofColor::magenta));
 
-	lines[0]->setCenter(ofVec2f(400, 400));
-	lines[1]->setCenter(ofVec2f(400, 400));
-	lines[2]->setCenter(ofVec2f(400, 400));
+	lines[0]->setCenter(ofVec2f(300, 400));
+	lines[1]->setCenter(ofVec2f(300, 400));
+	lines[2]->setCenter(ofVec2f(300, 400));
 
 
 	allParameters.clear();
@@ -315,9 +315,9 @@ void LineSet::drawToGraphic(ofxLaser::Graphic& graphic)
 
 HorizontalLineSet::HorizontalLineSet()
 {
-	lines.push_back(new HorizontalLine(100, ofColor::red));
+	lines.push_back(new HorizontalLine(400, ofColor::red));
 	lines.push_back(new HorizontalLine(300, ofColor::green));
-	lines.push_back(new HorizontalLine(400, ofColor::orange));
+	lines.push_back(new HorizontalLine(200, ofColor::orange));
 
 	allParameters.clear();
 	for (int i = 0; i < NR_OF_HOR_LINES; i++)

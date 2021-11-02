@@ -88,7 +88,7 @@ void RealtimeAudioShowElement::update()
 			//audioProcessor.calc();
 			bd.updateFFT();
 
-			//bool isOnsetting = onsetD.isOnsetting(bd.getMagnitude());
+			bool isOnsetting = onsetD.isOnsetting(bd.getMagnitude());
 			//if (isOnsetting)
 			//	cout << "isOnSetting = " << isOnsetting << endl;
 
@@ -109,7 +109,7 @@ void RealtimeAudioShowElement::update()
 					if (i % 2 == 1)
 						graphicSet->pulse(i);
 			}
-			if (bd.isHat())
+			if (bd.isHat() || isOnsetting)
 			{
 				for (int i = 0; i < graphicSet->getLineCount(); i++)
 					if (i % 3 == 2)
