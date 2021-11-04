@@ -1,0 +1,12 @@
+{
+    "group": {
+        "Input_device_name": "Microphone (Realtek(R) Audio)",
+        "Line_0_color": "255, 0, 0, 255",
+        "Line_1_color": "255, 136, 0, 255",
+        "Line_2_color": "255, 242, 0, 255",
+        "Pulse_response__px_": "23.44",
+        "React_to_audio": "1",
+        "Start_playing_on_activation": "1",
+        "Velocity_factor": "1"
+    }
+}

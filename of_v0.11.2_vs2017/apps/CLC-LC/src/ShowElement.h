@@ -71,6 +71,7 @@ protected:
 	ofParameter<float> scale;
 	ofParameter<float> offsetX;
 	ofParameter<float> offsetY;
+	ofParameter<float> scaleY;
 	ofParameter<bool> rotate3D;
 	ofParameter<bool> rotate360;
 	ofParameter<int> renderProfileIndex;

@@ -11,7 +11,7 @@
 ofApp::ofApp()
 {
 	// listen on the given port
-	ofLog() << "OSC Listening for osc messages on port " << PORT;
+	cout << "OSC Listening for osc messages on port " << PORT;
 	receiver.setup(PORT);
 
 	currentMsgString = 0;
@@ -152,7 +152,7 @@ void ofApp::update(){
 		{
 			setSelectedShowElement(1, true);
 		}
-		else {
+//		else {
 
 			// unrecognized message: display on the bottom of the screen
 			string msgString;
@@ -187,7 +187,7 @@ void ofApp::update(){
 
 			// clear the next line
 			msgStrings[currentMsgString] = "";
-		}
+//		}
 	}
 }
 

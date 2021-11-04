@@ -1,0 +1,17 @@
+{
+    "group": {
+        "Current_SVG": "12",
+        "Draw_two-sided": "0",
+        "Filename": "MaskCalibrationAide.svg",
+        "Offset_X": "320",
+        "Offset_Y": "400",
+        "Other_side_SVG": "0",
+        "Other_side_filename": "",
+        "Render_Profile": "1",
+        "Render_Profile_name": "Render Profile : OFXLASER_PROFILE_DETAIL",
+        "Rotate_360": "0",
+        "Rotate_3D": "0",
+        "SVG_scale": "1.49",
+        "Scale_Y": "1"
+    }
+}

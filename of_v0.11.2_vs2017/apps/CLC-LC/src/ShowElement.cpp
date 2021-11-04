@@ -115,6 +115,7 @@ void SvgShowElement::setup()
 	addParameter(scale.set("SVG scale", 1.0, 0.1, 6), false);
 	addParameter(offsetX.set("Offset X", 400, 0, 800), false);
 	addParameter(offsetY.set("Offset Y", 400, 0, 800), false);
+	addParameter(scaleY.set("Scale Y", 1, 0.1, 2), false);
 	addParameter(rotate3D.set("Rotate 3D", true), false);
 	addParameter(rotate360.set("Rotate 360", false), false);
 	addParameter(renderProfileLabel.set("Render Profile name", ""), false);
@@ -154,7 +155,7 @@ void SvgShowElement::drawLaserGraphic(ofxLaser::Manager& laserManager, string re
 	ofPushMatrix();
 
 	ofTranslate(offsetX, offsetY);
-	ofScale(scale, scale);
+	ofScale(scale, scale * scaleY);
 
 	float modulo = rotate360 ? 360 : 180;
 	float angle = fmod(ofGetElapsedTimef() * 30, modulo) - 90;

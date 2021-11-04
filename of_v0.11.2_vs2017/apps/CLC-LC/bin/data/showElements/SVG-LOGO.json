@@ -1,0 +1,16 @@
+{
+    "group": {
+        "Current_SVG": "9",
+        "Draw_two-sided": "1",
+        "Filename": "CLC-logo-staand-zw-notext-white.svg",
+        "Offset_X": "400",
+        "Offset_Y": "400",
+        "Other_side_SVG": "11",
+        "Other_side_filename": "",
+        "Render_Profile": "1",
+        "Render_Profile_name": "Render Profile : OFXLASER_PROFILE_DETAIL",
+        "Rotate_360": "1",
+        "Rotate_3D": "1",
+        "SVG_scale": "1.27"
+    }
+}
