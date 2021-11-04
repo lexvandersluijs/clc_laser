@@ -37,6 +37,9 @@ protected:
 	ofParameter<bool> reactToAudio;
 	ofParameter<float> velocityFactor;
 	ofParameter<float> pulseResponseInPixels;
+	ofParameter<float> scaleX;
+	ofParameter<float> scaleY;
+	ofParameter<float> rotationVelocityFactor;
 
 	GraphicSet* graphicSet;
 	ofxLaser::Graphic graphic;

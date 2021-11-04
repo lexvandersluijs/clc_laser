@@ -33,6 +33,8 @@ void ofApp::setup(){
 	showElements.push_back(new SvgShowElement("Mask Calibration"));
 	//showElements.push_back(new SvgShowElement("SVG-LEADERS"));
 	showElements.push_back(new SvgShowElement("SVG-LOGO-LC21"));
+	showElements.push_back(new SvgShowElement("Leadership"));
+	showElements.push_back(new SvgShowElement("Let's Talk"));
 	//showElements.push_back(new TimelineWithAudioShowElement("Song-1", "sound/AUD-20211025-WA0003-vnc.mp3", new SuperEllipseSet(4, 100, 100)));
 	//showElements.push_back(new TimelineWithAudioShowElement("Song-2-Lines", "sound/NextStep_CLCEdit_Richard.mp3", new LineSet()));
 	//showElements.push_back(new TimelineWithAudioShowElement("Song-3-HorLines", "sound/NextStep_CLCEdit_Richard.mp3", new HorizontalLineSet()));
@@ -40,6 +42,8 @@ void ofApp::setup(){
 	showElements.push_back(new RealtimeAudioShowElement("SuperEllipse-1", "Microphone (2- USB Audio CODEC )", new SuperEllipseSet(4, 80, 80)));
 	showElements.push_back(new RealtimeAudioShowElement("VerticalLines-1", "Microphone (2- USB Audio CODEC )", new LineSet()));
 	showElements.push_back(new RealtimeAudioShowElement("HorizontalLines-1", "Microphone (2- USB Audio CODEC )", new HorizontalLineSet()));
+	showElements.push_back(new RealtimeAudioShowElement("SuperDiamonds-1", "Microphone (2- USB Audio CODEC )", new SuperEllipseSet(0.5, 80, 80)));
+	showElements.push_back(new RealtimeAudioShowElement("SquareSupers-1", "Microphone (2- USB Audio CODEC )", new SuperEllipseSet(6, 80, 80)));
 	//showElements.push_back(new SvgAnimationShowElement("SVG-Animation-Motorbikes"));
 	//showElements.push_back(new RealtimeCirclesShowElement("RT-Circles", "Microphone (Realtek(R) Audio)", new ConcentricCircleSet()));
 	//showElements.push_back(new RealtimeParticlesShowElement("RT-Particles"));
@@ -136,22 +140,43 @@ void ofApp::update(){
 		{ 
 			laserManager.armAllLasers();
 		}
-		else if (m.getAddress() == "/oscControl/gridButton5") // superellipses
+		else if (m.getAddress() == "/oscControl/maskCalib") // mask calib pattern
 		{
-			setSelectedShowElement(2, true);
+			setSelectedShowElement(0, true);
 		}
-		else if (m.getAddress() == "/oscControl/gridButton6") // spinning vertical lines
-		{
-			setSelectedShowElement(3, true);
-		}
-		else if (m.getAddress() == "/oscControl/gridButton7") // horizontal lines
-		{
-			setSelectedShowElement(4, true);
-		}
-		else if (m.getAddress() == "/oscControl/gridButton9") // CLC - LC logo
+		else if (m.getAddress() == "/oscControl/clclc") // CLC-LC spinning logo
 		{
 			setSelectedShowElement(1, true);
 		}
+		else if (m.getAddress() == "/oscControl/leadership") // Leadership text
+		{
+			setSelectedShowElement(2, true);
+		}
+		else if (m.getAddress() == "/oscControl/letstalk") // Let's talk text
+		{
+			setSelectedShowElement(3, true);
+		}
+		else if (m.getAddress() == "/oscControl/superellipse") // 'TV' superellipses
+		{
+			setSelectedShowElement(4, true);
+		}
+		else if (m.getAddress() == "/oscControl/verticallines") // spinning vertical lines
+		{
+			setSelectedShowElement(5, true);
+		}
+		else if (m.getAddress() == "/oscControl/horlines") // horizontal lines
+		{
+			setSelectedShowElement(6, true);
+		}
+		else if (m.getAddress() == "/oscControl/superdiamonds") // super ellipse diamonds
+		{
+			setSelectedShowElement(7, true);
+		}
+		else if (m.getAddress() == "/oscControl/squaresupers") // rotating square-ish superellipses
+		{
+			setSelectedShowElement(8, true);
+		}
+
 //		else {
 
 			// unrecognized message: display on the bottom of the screen

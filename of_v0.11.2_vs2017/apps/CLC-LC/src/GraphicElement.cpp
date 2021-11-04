@@ -41,6 +41,7 @@ void GraphicElement::drawToGraphic(ofxLaser::Graphic& graphic)
 	ofPushMatrix();
 	ofTranslate(center);
 	ofRotateZRad(rotation);
+	ofScale(scaleX, scaleY);
 
 	graphic.addPolyline(getPolyline(), getColor(), false, true);
 	ofPopMatrix();
@@ -104,7 +105,7 @@ ofPolyline& SuperEllipse::getPolyline()
 		float cost = cos(tp);
 		float sint = sin(tp);
 		float x = pow(abs(cost), 2 / param_n) * a * sgn(cost);
-		float y = pow(abs(sint), 2 / param_n) * b * sgn(sint) * 0.8f; // hack to scale down vertically: looks more like TV tube
+		float y = pow(abs(sint), 2 / param_n) * b * sgn(sint); 
 
 		polyline.addVertex(x, y, 0);
 	}
@@ -189,7 +190,14 @@ void SuperEllipseSet::setParams(float n, float a, float b)
 void SuperEllipseSet::drawToGraphic(ofxLaser::Graphic& graphic)
 {
 	// set transform
-	float timeElapsed = ofGetElapsedTimef();
+	// timeElapsed for translation
+	double timeElapsed = ofGetElapsedTimed() * velocityFactor;
+
+	// timeElapsed for rotation
+	double timeElapsedModTwoPi = fmod(ofGetElapsedTimed() * rotationVelocityFactor, TWO_PI);
+
+	float maxRotationRadians = 0.8f;
+	float angle = timeElapsedModTwoPi; // 1 radian per second, so 2*pi seconds = ~6.3 seconds for a full rotation
 
 	//float distance = velocityFactor * timeElapsed * 50.f; // 50 pixels / second, 16 seconds to cover 800 px
 	//float maxDistance = 1200;
@@ -201,6 +209,8 @@ void SuperEllipseSet::drawToGraphic(ofxLaser::Graphic& graphic)
 	for (int i = 0; i < NR_OF_ELLIPSES; i++)
 	{
 		lines[i]->setColor(color[i].get());
+
+		lines[i]->setRotation(angle);
 
 		// compute all object positions based on current time, X position, start time and animation duration
 		float offsetTime = timeElapsed - motionStartTime[i].get();

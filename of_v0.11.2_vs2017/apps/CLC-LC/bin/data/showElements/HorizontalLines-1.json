@@ -6,6 +6,9 @@
         "Line_2_color": "255, 242, 0, 255",
         "Pulse_response__px_": "23.44",
         "React_to_audio": "1",
+        "Rotation_velocity_factor": "1",
+        "Scale_X": "1",
+        "Scale_Y": "1",
         "Start_playing_on_activation": "1",
         "Velocity_factor": "1"
     }

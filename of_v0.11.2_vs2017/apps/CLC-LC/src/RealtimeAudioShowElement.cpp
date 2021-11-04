@@ -57,8 +57,10 @@ void RealtimeAudioShowElement::setup()
 	addParameter(startPlayingOnActivation.set("Start playing on activation", false), false);
 	addParameter(reactToAudio.set("React to audio", true), false);
 	addParameter(velocityFactor.set("Velocity factor", 1.0f, 0, 5.0f), false);
+	addParameter(rotationVelocityFactor.set("Rotation velocity factor", 1.0f, 0, 5.0f), false);
 	addParameter(pulseResponseInPixels.set("Pulse response (px)", 20.0f, 0, 100.0f), false);
-
+	addParameter(scaleX.set("Scale X", 1.0f, 0.1f, 5.f), false);
+	addParameter(scaleY.set("Scale Y", 1.0f, 0.1f, 5.f), false);
 	bd.enableBeatDetect();
 }
 
@@ -117,7 +119,10 @@ void RealtimeAudioShowElement::update()
 			}
 		}
 		graphicSet->setVelocityFactor(velocityFactor.get());
+		graphicSet->setRotationVelocityFactor(rotationVelocityFactor.get());
 		graphicSet->setPulseResponseInPixels(pulseResponseInPixels.get());
+		graphicSet->setScaleX(scaleX.get());
+		graphicSet->setScaleY(scaleY.get());
 		graphicSet->update();
 	}
 }

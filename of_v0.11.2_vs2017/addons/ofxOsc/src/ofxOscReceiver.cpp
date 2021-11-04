@@ -65,6 +65,8 @@ bool ofxOscReceiver::start() {
 	osc::UdpListeningReceiveSocket *socket = nullptr;
 	try{
 		osc::IpEndpointName name(osc::IpEndpointName::ANY_ADDRESS, settings.port);
+		//192.168.8.214
+		//osc::IpEndpointName name("192.168.8.214", settings.port);
 		socket = new osc::UdpListeningReceiveSocket(name, this, settings.reuse);
 		auto deleter = [](osc::UdpListeningReceiveSocket*socket){
 			// tell the socket to shutdown

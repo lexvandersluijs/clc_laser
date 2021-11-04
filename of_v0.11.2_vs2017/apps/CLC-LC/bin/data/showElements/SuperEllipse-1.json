@@ -35,7 +35,10 @@
         "Input_device_name": "Microphone (Realtek(R) Audio)",
         "Pulse_response__px_": "20.83",
         "React_to_audio": "1",
+        "Rotation_velocity_factor": "0",
+        "Scale_X": "1",
+        "Scale_Y": "0.72",
         "Start_playing_on_activation": "1",
-        "Velocity_factor": "0.42"
+        "Velocity_factor": "0.59"
     }
 }
