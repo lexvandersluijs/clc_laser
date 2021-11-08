@@ -1,18 +1,20 @@
 {
     "Laser": {
         "Custom": {
+            "CLC": "0",
             "HorizontalLines-1": "0",
             "Leadership": "0",
             "Let's_Talk": "0",
-            "Mask_Calibration": "1",
+            "Let's_Talk_Leadership": "0",
+            "Mask_Calibration": "0",
             "SVG-LOGO-LC21": "0",
-            "SquareSupers-1": "0",
+            "SquareSupers-1": "1",
             "SuperDiamonds-1": "0",
             "SuperEllipse-1": "0",
             "VerticalLines-1": "0"
         },
         "Edit_laser": "1",
-        "Global_brightness": "0.2",
+        "Global_brightness": "1",
         "Global_test_pattern": "0",
         "Interface": {
             "Lock_input_zones": "1",

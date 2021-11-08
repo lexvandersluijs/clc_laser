@@ -1,12 +1,12 @@
 {
     "group": {
-        "Input_device_name": "Microphone (Realtek(R) Audio)",
+        "Input_device_name": "Microphone (USB Audio CODEC )",
         "Line_0_color": "255, 0, 0, 255",
         "Line_1_color": "255, 151, 0, 255",
         "Line_2_color": "255, 242, 0, 255",
         "Line_3_color": "255, 0, 249, 255",
-        "Pulse_response__px_": "4.2",
-        "React_to_audio": "0",
+        "Pulse_response__px_": "13.92",
+        "React_to_audio": "1",
         "Rotation_velocity_factor": "1",
         "Scale_X": "1",
         "Scale_Y": "1",

@@ -1,6 +1,6 @@
 {
     "group": {
-        "Input_device_name": "Microphone (Realtek(R) Audio)",
+        "Input_device_name": "Microphone (USB Audio CODEC )",
         "Line_0_color": "255, 0, 0, 255",
         "Line_1_color": "255, 136, 0, 255",
         "Line_2_color": "255, 242, 0, 255",

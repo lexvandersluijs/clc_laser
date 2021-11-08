@@ -44,6 +44,8 @@ void ofApp::setup(){
 	showElements.push_back(new RealtimeAudioShowElement("HorizontalLines-1", "Microphone (2- USB Audio CODEC )", new HorizontalLineSet()));
 	showElements.push_back(new RealtimeAudioShowElement("SuperDiamonds-1", "Microphone (2- USB Audio CODEC )", new SuperEllipseSet(0.5, 80, 80)));
 	showElements.push_back(new RealtimeAudioShowElement("SquareSupers-1", "Microphone (2- USB Audio CODEC )", new SuperEllipseSet(6, 80, 80)));
+	showElements.push_back(new SvgShowElement("Let's Talk Leadership"));
+	showElements.push_back(new SvgShowElement("CLC"));
 	//showElements.push_back(new SvgAnimationShowElement("SVG-Animation-Motorbikes"));
 	//showElements.push_back(new RealtimeCirclesShowElement("RT-Circles", "Microphone (Realtek(R) Audio)", new ConcentricCircleSet()));
 	//showElements.push_back(new RealtimeParticlesShowElement("RT-Particles"));
@@ -176,7 +178,18 @@ void ofApp::update(){
 		{
 			setSelectedShowElement(8, true);
 		}
-
+		else if (m.getAddress() == "/oscControl/ltl") // rotating square-ish superellipses
+		{
+			setSelectedShowElement(9, true);
+		}
+		else if (m.getAddress() == "/oscControl/lc21") // rotating square-ish superellipses
+		{
+			setSelectedShowElement(10, true);
+		}
+		else if (m.getAddress() == "/oscControl/clc") // rotating square-ish superellipses
+		{
+			setSelectedShowElement(10, true);
+		}
 //		else {
 
 			// unrecognized message: display on the bottom of the screen

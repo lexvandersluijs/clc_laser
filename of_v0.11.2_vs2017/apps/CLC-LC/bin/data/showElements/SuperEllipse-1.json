@@ -32,13 +32,13 @@
         "Ellipse_7_duration": "8.72",
         "Ellipse_7_start_X": "497.67",
         "Ellipse_7_start_time": "2.91",
-        "Input_device_name": "Microphone (Realtek(R) Audio)",
+        "Input_device_name": "Microphone (USB Audio CODEC )",
         "Pulse_response__px_": "20.83",
         "React_to_audio": "1",
         "Rotation_velocity_factor": "0",
         "Scale_X": "1",
-        "Scale_Y": "0.72",
+        "Scale_Y": "0.43",
         "Start_playing_on_activation": "1",
-        "Velocity_factor": "0.59"
+        "Velocity_factor": "0.77"
     }
 }
