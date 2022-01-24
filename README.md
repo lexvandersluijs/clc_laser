@@ -13,7 +13,7 @@ All of these laser show elements were created using OpenFrameworks and the brill
 
 This repository has the source code for alle the visuals you see here.
 
-# Videos
+# Videos (click to view on YouTube)
 [![Sticks dance](https://img.youtube.com/vi/2M31tv1UrKs/maxresdefault.jpg)](https://youtu.be/2M31tv1UrKs)
 [![When I let go I find life](https://img.youtube.com/vi/pD00E9UTrd4/maxresdefault.jpg)](https://youtu.be/pD00E9UTrd4)
 [![The time has come](https://img.youtube.com/vi/aed6u7hyAEQ/maxresdefault.jpg)](https://youtu.be/aed6u7hyAEQ)
