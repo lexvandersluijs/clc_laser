@@ -13,6 +13,16 @@ All of these laser show elements were created using OpenFrameworks and the brill
 
 This repository has the source code for alle the visuals you see here.
 
+# Videos
+[![Sticks dance](https://img.youtube.com/vi/2M31tv1UrKs/maxresdefault.jpg)](https://youtu.be/2M31tv1UrKs)
+[![When I let go I find life](https://img.youtube.com/vi/pD00E9UTrd4/maxresdefault.jpg)](https://youtu.be/pD00E9UTrd4)
+[![The time has come](https://img.youtube.com/vi/aed6u7hyAEQ/maxresdefault.jpg)](https://youtu.be/aed6u7hyAEQ)
+[![There is joy in the house of the Lord today](https://img.youtube.com/vi/d4A9pCDNORM/maxresdefault.jpg)](https://youtu.be/d4A9pCDNORM)
+[![Every other name fades](https://img.youtube.com/vi/xQT8kR1K7pg/maxresdefault.jpg)](https://youtu.be/xQT8kR1K7pg)
+[![God the redeemer](https://img.youtube.com/vi/8hqVYrExHm8/maxresdefault.jpg)](https://youtu.be/8hqVYrExHm8)
+[![Logo projection for the breaks](https://img.youtube.com/vi/3u6TEgvOFVc/maxresdefault.jpg)](https://youtu.be/3u6TEgvOFVc)
+
+# Pictures
 ![Worship photo 1](https://github.com/lexvandersluijs/clc_laser/raw/main/production_photos/20211105_103354.jpg)
 ![Senior pastor Erald](https://github.com/lexvandersluijs/clc_laser/raw/main/production_photos/20211105_111330.jpg)
 ![Let's talk](https://github.com/lexvandersluijs/clc_laser/raw/main/production_photos/20211105_141050.jpg)
